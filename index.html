@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="bn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRBZH98TKH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-DRBZH98TKH');
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2938711937593078" crossorigin="anonymous"></script>
+
+    <title>RS Live TV - TV Version</title>
+
+    <link rel="shortcut icon" type="x-icon" href="https://i.postimg.cc/mD1VCt2C/RS-Live.png">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #000;
+            overflow: hidden; /* টিভিতে স্ক্রোলবার হাইড রাখার জন্য */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .tv-view .embed-responsive {
+            border: 2px solid #1a1a1a;
+            border-radius: 12px;
+            background: #000;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        iframe {
+            border: 0 !important;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* টিভি রিমোট ফোকাস স্টাইল - প্রিমিয়াম নিয়ন রিং */
+        .thumbnail-slider li a:focus {
+            outline: none;
+            border: 4px solid #00d2ff !important;
+            box-shadow: 0 0 15px #00d2ff;
+            transform: scale(1.05);
+            border-radius: 8px;
+            display: block;
+            transition: all 0.2s ease;
+        }
+
+        .marquee-container {
+            background: #0a0a0a;
+            color: #ffffff;
+            padding: 6px 0;
+            display: flex;
+            align-items: center;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+        }
+
+        .notice-label {
+            background: #ff4444;
+            color: #fff;
+            padding: 2px 10px;
+            margin-left: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .footer-premium {
+            background: #050505;
+            padding: 15px 0 20px 0;
+            text-align: center;
+        }
+
+        .tio-style-banner-fixed {
+            width: 320px;
+            height: 50px;
+            background: url('https://static.vecteezy.com/system/resources/previews/042/672/844/non_2x/national-flag-of-bangladesh-bd-vector.jpg') center/cover;
+            position: relative;
+            overflow: hidden;
+            border-radius: 6px;
+            border: 1px solid #333;
+            display: flex;
+            align-items: center;
+            margin: 5px auto;
+        }
+
+        .tio-style-banner-fixed::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: smoke-shine 4s infinite;
+            z-index: 3;
+        }
+
+        @keyframes smoke-shine {
+            0% { left: -150%; }
+            40% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,210,255,0.1) 100%);
+            z-index: 1;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0 10px;
+            justify-content: space-between;
+        }
+
+        .brand-logo-fixed {
+            font-weight: 900;
+            font-size: 13px;
+            font-style: italic;
+            white-space: nowrap;
+        }
+
+        .rs-live { color: #fff; }
+        .tv-text { color: #ff9100; text-shadow: 0 0 5px #ff9100; }
+
+        .text-section-fixed {
+            flex-grow: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .main-tags {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            font-size: 7.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .tag-cricket { color: #FFD700; }
+        .tag-football { color: #00FF00; }
+        .tag-tv { color: #00D2FF; }
+        .sub-text { font-size: 9px; color: #ffffff; margin: 0; font-weight: bold; text-shadow: 1px 1px 2px #000; }
+
+        .live-circle {
+            background: #ff0000;
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .pulse {
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse-animation 1s infinite;
+        }
+
+        @keyframes pulse-animation {
+            0% { transform: scale(0.95); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        .copyright {
+            color: #444;
+            font-size: 11px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body onload="disableClick()">
+
+    <div class="container-fluid tv-area">
+        <div class="row">
+
+            <div class="col-xs-12 col-md-9 tv-view">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe name="player"
+                        id="tv-iframe"
+                        class="embed-responsive-item"
+                        allowfullscreen
+                        src="channel.html"></iframe>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-3 channel-list" id="sidebar-list">
+                <ul class="thumbnail-slider" id="channel-container"></ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="marquee-container">
+        <div class="notice-label">NOTICE</div>
+        <marquee scrollamount="5">
+            ⚠️ বর্তমানে আমাদের ওয়েব সাইট আপডেট চলছে। রিমোটের Arrow Keys দিয়ে চ্যানেল সিলেক্ট করুন এবং OK চাপুন।
+        </marquee>
+    </div>
+
+    <footer class="footer-premium">
+        <div class="container">
+            <div class="tio-style-banner-fixed">
+                <div class="banner-overlay"></div>
+                <div class="content-wrapper">
+                    <div class="brand-logo-fixed">
+                        <span class="rs-live">RS Live</span>
+                        <span class="tv-text">TV</span>
+                    </div>
+                    <div class="text-section-fixed">
+                        <div class="main-tags">
+                            <span class="tag-cricket">CRICKET 🏏</span>
+                            <span class="tag-football">FOOTBALL ⚽</span>
+                            <span class="tag-tv">TV SHOWS 📺</span>
+                        </div>
+                        <p class="sub-text">সব পাবেন একদম ফ্রিতে!</p>
+                    </div>
+                    <div class="live-circle"><span class="pulse"></span>LIVE</div>
+                </div>
+            </div>
+            <div class="copyright">
+                © 2026 RS LIVE TV | TV Edition
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function disableClick() {
+            document.oncontextmenu = function () { return false; };
+        }
+    </script>
+</body>
+</html>
