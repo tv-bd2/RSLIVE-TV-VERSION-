@@ -23,13 +23,30 @@
     <style>
         body {
             background: #000;
-            overflow: hidden; /* টিভিতে স্ক্রোলবার হাইড রাখার জন্য */
+            overflow: hidden;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
 
-        .tv-view .embed-responsive {
+        /* টিভির জন্য ফ্লেক্সবক্স মেইন কন্টেইনার */
+        .tv-main-layout {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            height: 76vh; /* প্লেয়ার ও সাইডবারের ফিক্সড হাইট */
+            padding: 15px;
+            gap: 15px;
+            box-sizing: border-box;
+        }
+
+        .tv-view-container {
+            flex: 3; /* প্লেয়ার স্ক্রিন বড় থাকবে */
+            height: 100%;
+        }
+
+        .tv-view-container .embed-responsive {
+            height: 100%;
             border: 2px solid #1a1a1a;
             border-radius: 12px;
             background: #000;
@@ -44,12 +61,22 @@
             height: 100%;
         }
 
+        .channel-list-container {
+            flex: 1; /* সাইডবার চ্যানেল লিস্ট */
+            height: 100%;
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
         /* টিভি রিমোট ফোকাস স্টাইল - প্রিমিয়াম নিয়ন রিং */
         .thumbnail-slider li a:focus {
             outline: none;
             border: 4px solid #00d2ff !important;
             box-shadow: 0 0 15px #00d2ff;
-            transform: scale(1.05);
+            transform: scale(1.03);
             border-radius: 8px;
             display: block;
             transition: all 0.2s ease;
@@ -78,7 +105,7 @@
 
         .footer-premium {
             background: #050505;
-            padding: 15px 0 20px 0;
+            padding: 10px 0 15px 0;
             text-align: center;
         }
 
@@ -194,31 +221,28 @@
         .copyright {
             color: #444;
             font-size: 11px;
-            margin-top: 10px;
+            margin-top: 5px;
         }
     </style>
 </head>
 
 <body onload="disableClick()">
 
-    <div class="container-fluid tv-area">
-        <div class="row">
-
-            <div class="col-xs-12 col-md-9 tv-view">
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe name="player"
-                        id="tv-iframe"
-                        class="embed-responsive-item"
-                        allowfullscreen
-                        src="channel.html"></iframe>
-                </div>
+    <div class="tv-main-layout">
+        
+        <div class="tv-view-container">
+            <div class="embed-responsive">
+                <iframe name="player"
+                    id="tv-iframe"
+                    allowfullscreen
+                    src="channel.html"></iframe>
             </div>
-
-            <div class="col-xs-12 col-md-3 channel-list" id="sidebar-list">
-                <ul class="thumbnail-slider" id="channel-container"></ul>
-            </div>
-
         </div>
+
+        <div class="channel-list-container" id="sidebar-list">
+            <ul class="thumbnail-slider" id="channel-container"></ul>
+        </div>
+
     </div>
 
     <div class="marquee-container">
