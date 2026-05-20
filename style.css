@@ -10,37 +10,33 @@ body {
     color: #fff;
 }
 
-.tv-area { 
-    margin-top: 20px; 
-    margin-bottom: 20px;
-}
-
-/* টিভি সাইডবার চ্যানেল লিস্ট গ্রিড */
-.channel-list { 
-    padding-left: 15px; 
-    height: 75vh; 
-    overflow-y: auto; 
-    overflow-x: hidden; 
-    -webkit-overflow-scrolling: touch; 
-    scroll-behavior: smooth; 
+/* চ্যানেল লিস্টের মেইন ফিক্সড কন্টেইনার */
+.channel-list-container { 
+    height: 100% !important; 
+    overflow-y: auto !important; 
+    overflow-x: hidden !important; 
+    display: block !important; /* যাতে কোনো মিডিয়া কুয়েরি এটিকে হাইড করতে না পারে */
 }
 
 .thumbnail-slider { 
     margin: 0; 
     padding: 0;  
+    display: block !important;
 }
 
 .thumbnail-slider li { 
     list-style: none; 
     margin-bottom: 12px; 
+    display: block !important;
 }
 
 .thumbnail-slider li a {
-    display: block;
+    display: block !important;
     border: 3px solid #1a1a1a;
     border-radius: 8px;
     overflow: hidden;
     transition: transform 0.2s ease;
+    background: #111;
 }
 
 .thumbnail-slider li img { 
@@ -50,29 +46,21 @@ body {
 }
 
 /* স্ক্রোলবার ডিজাইন - ডার্ক টিভি থিম */
-.channel-list::-webkit-scrollbar {
+.channel-list-container::-webkit-scrollbar {
     width: 6px;
     background-color: #000;
 }
-.channel-list::-webkit-scrollbar-thumb {
+.channel-list-container::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #222;
 }
 
-/* রেস্পন্সিভ লেআউট টিভির জন্য ফিক্সড */
+/* সব ধরণের ছোট-বড় টিভি স্ক্রিনের জন্য ফিক্সড গ্রিড */
 @media (max-width: 990px) {
-    .channel-list { 
-        padding: 10px 15px; 
-        height: auto !important; 
-        overflow-y: hidden; 
-        overflow-x: auto; 
-        white-space: nowrap;
+    .tv-main-layout {
+        flex-direction: row !important; /* নিচে নামবে না, সাইডেই থাকবে */
     }
-    .thumbnail-slider li { 
-        display: inline-block; 
-        margin: 0 10px 0 0; 
-    }
-    .thumbnail-slider li a { 
-        width: 120px; 
+    .channel-list-container { 
+        height: 100% !important;
     }
 }
