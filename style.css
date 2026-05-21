@@ -10,32 +10,22 @@ body {
     color: #fff;
 }
 
-/* চ্যানেল লিস্টের মেইন ফিক্সড কন্টেইনার */
-.channel-list-container { 
+.tv-grid-scroll { 
     height: 100% !important; 
     overflow-y: auto !important; 
     overflow-x: hidden !important; 
-    display: block !important; /* যাতে কোনো মিডিয়া কুয়েরি এটিকে হাইড করতে না পারে */
-}
-
-.thumbnail-slider { 
-    margin: 0; 
-    padding: 0;  
-    display: block !important;
 }
 
 .thumbnail-slider li { 
-    list-style: none; 
-    margin-bottom: 12px; 
     display: block !important;
+    width: 100%;
 }
 
 .thumbnail-slider li a {
     display: block !important;
-    border: 3px solid #1a1a1a;
-    border-radius: 8px;
+    border: 2px solid #1a1a1a;
+    border-radius: 6px;
     overflow: hidden;
-    transition: transform 0.2s ease;
     background: #111;
 }
 
@@ -45,22 +35,12 @@ body {
     display: block;
 }
 
-/* স্ক্রোলবার ডিজাইন - ডার্ক টিভি থিম */
-.channel-list-container::-webkit-scrollbar {
-    width: 6px;
+/* প্রফেশনাল ডার্ক স্ক্রোলবার */
+.tv-grid-scroll::-webkit-scrollbar {
+    width: 4px;
     background-color: #000;
 }
-.channel-list-container::-webkit-scrollbar-thumb {
+.tv-grid-scroll::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: #222;
-}
-
-/* সব ধরণের ছোট-বড় টিভি স্ক্রিনের জন্য ফিক্সড গ্রিড */
-@media (max-width: 990px) {
-    .tv-main-layout {
-        flex-direction: row !important; /* নিচে নামবে না, সাইডেই থাকবে */
-    }
-    .channel-list-container { 
-        height: 100% !important;
-    }
 }
