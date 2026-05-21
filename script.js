@@ -1,105 +1,151 @@
 document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('channel-container');
-    let currentIndex = 0;
-    let focusableElements = [];
+    const searchInput = document.getElementById('tv-search');
+    let allChannelsData = [];
+    let activeElements = [];
+    let currentFocusIndex = -1; // -1 মানে সার্চবার ফোকাসড
 
-    // JSON ফাইল থেকে চ্যানেল লোড করা
+    // JSON থেকে ডাটা নেওয়া
     fetch('playlist.json')
         .then(response => response.json())
         .then(data => {
-            data.forEach((channel, index) => {
-                const li = document.createElement('li');
-                // tabindex="0" দেওয়া হয়েছে যাতে রিমোটের Arrow Keys দিয়ে এটিকে ফোকাস করা যায়
-                li.innerHTML = `
-                    <a href="javascript:void(0);" 
-                       class="tv-focusable" 
-                       data-index="${index}" 
-                       data-url="${channel.url}"
-                       tabindex="0">
-                        <img src="${channel.image}" alt="${channel.name}">
-                    </a>
-                `;
-                container.appendChild(li);
-            });
-
-            // চ্যানেলগুলো তৈরি হওয়ার পর তাদের লিস্ট তৈরি করা
-            focusableElements = document.querySelectorAll('.tv-focusable');
-            
-            if (focusableElements.length > 0) {
-                // অ্যাপ বা সাইট ওপেন হলেই প্রথম চ্যানেলটি অটোমেটিক ফোকাস (সিলেক্ট) হয়ে থাকবে
-                focusableElements[currentIndex].focus();
-            }
-
-            // রিমোট কন্ট্রোল কী লিসেনার চালু করা
-            initTvNavigation();
+            allChannelsData = data;
+            renderChannels(allChannelsData);
+            initTvControls();
         })
         .catch(error => {
             console.error('Error loading playlist:', error);
-            container.innerHTML = '<p style="color:red; font-size:12px; text-align:center;">Playlist Load ব্যর্থ হয়েছে!</p>';
+            container.innerHTML = '<p style="color:red; text-align:center; grid-column: span 3;">Error Loading Playlist!</p>';
         });
 
-    // টিভি রিমোটের বাটন কন্ট্রোল ফাংশন
-    function initTvNavigation() {
+    // চ্যানেল রেন্ডার করার ফাংশন
+    function renderChannels(channels) {
+        container.innerHTML = '';
+        channels.forEach((channel, index) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <a href="javascript:void(0);" 
+                   class="tv-focusable-item" 
+                   data-url="${channel.url}"
+                   tabindex="0">
+                    <img src="${channel.image}" alt="${channel.name}">
+                </a>
+            `;
+            container.appendChild(li);
+        });
+        
+        // ফোকাস এলিমেন্ট আপডেট করা
+        updateFocusableList();
+    }
+
+    function updateFocusableList() {
+        activeElements = Array.from(document.querySelectorAll('.tv-focusable-item'));
+    }
+
+    // সার্চবারের টাইপিং ইনপুট লিসেনার (মোবাইল/কীবোর্ড/টিভি কীবোর্ড)
+    searchInput.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        const filtered = allChannelsData.filter(ch => ch.name.toLowerCase().includes(query));
+        renderChannels(filtered);
+        currentFocusIndex = -1; // ফিল্টার হলে ফোকাস সার্চবারে ব্যাক করবে
+    });
+
+    // টিভি রিমোটের সম্পূর্ণ ৩-লাইন নেভিগেশন ম্যাপিং
+    function initTvControls() {
+        searchInput.focus(); // শুরুতে সার্চবার ফোকাস থাকবে
+
         document.addEventListener('keydown', function(e) {
-            if (focusableElements.length === 0) return;
+            updateFocusableList();
+            const totalItems = activeElements.length;
+            const columns = 3; // ৩ লাইন গ্রিড
 
             switch(e.keyCode) {
-                case 38: // TV Remote UP Arrow (উপরের বাটন)
-                    if (currentIndex > 0) {
-                        currentIndex--;
-                        focusableElements[currentIndex].focus();
-                        scrollToActiveChannel(focusableElements[currentIndex]);
+                case 37: // LEFT Arrow
+                    if (currentFocusIndex > 0) {
+                        currentFocusIndex--;
+                        activeElements[currentFocusIndex].focus();
+                        scrollToElement(activeElements[currentFocusIndex]);
+                    } else if (currentFocusIndex === 0) {
+                        // প্রথম চ্যানেল থেকে বামে চাপলে সার্চবারে যাবে
+                        currentFocusIndex = -1;
+                        searchInput.focus();
                     }
                     e.preventDefault();
                     break;
-                
-                case 40: // TV Remote DOWN Arrow (নিচের বাটন)
-                    if (currentIndex < focusableElements.length - 1) {
-                        currentIndex++;
-                        focusableElements[currentIndex].focus();
-                        scrollToActiveChannel(focusableElements[currentIndex]);
+
+                case 39: // RIGHT Arrow
+                    if (currentFocusIndex < totalItems - 1) {
+                        currentFocusIndex++;
+                        activeElements[currentFocusIndex].focus();
+                        scrollToElement(activeElements[currentFocusIndex]);
                     }
                     e.preventDefault();
                     break;
-                
-                case 13: // TV Remote OK / ENTER Button (মাঝখানের ওকে বাটন)
-                    // বর্তমানে যে চ্যানেলটি ফোকাস করা আছে, সেটির URL নেওয়া হবে
-                    const streamUrl = focusableElements[currentIndex].getAttribute('data-url');
-                    if (streamUrl) {
-                        // iframe-এর ভেতরের প্লেয়ারে নতুন চ্যানেল লোড করা হবে এবং চেঞ্জ হবে
-                        const iframe = document.getElementById('tv-iframe');
-                        if (iframe) {
-                            iframe.src = streamUrl;
+
+                case 38: // UP Arrow
+                    if (currentFocusIndex === -1) return; // সার্চবারে থাকলে ওপরে যাওয়ার জায়গা নেই
+                    
+                    if (currentFocusIndex < columns) {
+                        // প্রথম লাইনের যেকোনো চ্যানেল থেকে ওপরে চাপলে সার্চবারে যাবে
+                        currentFocusIndex = -1;
+                        searchInput.focus();
+                    } else {
+                        currentFocusIndex -= columns;
+                        activeElements[currentFocusIndex].focus();
+                        scrollToElement(activeElements[currentFocusIndex]);
+                    }
+                    e.preventDefault();
+                    break;
+
+                case 40: // DOWN Arrow
+                    if (currentFocusIndex === -1) {
+                        // সার্চবার থেকে নিচে চাপলে ১ম চ্যানেলে যাবে
+                        if (totalItems > 0) {
+                            currentFocusIndex = 0;
+                            activeElements[currentFocusIndex].focus();
+                            scrollToElement(activeElements[currentFocusIndex]);
+                        }
+                    } else if (currentFocusIndex + columns < totalItems) {
+                        currentFocusIndex += columns;
+                        activeElements[currentFocusIndex].focus();
+                        scrollToElement(activeElements[currentFocusIndex]);
+                    } else {
+                        // লাস্ট লাইনের নিচে চাপলে একদম শেষ চ্যানেলে ফোকাস লক হবে
+                        currentFocusIndex = totalItems - 1;
+                        activeElements[currentFocusIndex].focus();
+                        scrollToElement(activeElements[currentFocusIndex]);
+                    }
+                    e.preventDefault();
+                    break;
+
+                case 13: // OK / ENTER Button
+                    if (currentFocusIndex !== -1) {
+                        const streamUrl = activeElements[currentFocusIndex].getAttribute('data-url');
+                        if (streamUrl) {
+                            const iframe = document.getElementById('tv-iframe');
+                            if (iframe) iframe.src = streamUrl;
                         }
                     }
-                    e.preventDefault();
                     break;
             }
         });
 
-        // যদি কেউ মাউস বা টাচ স্ক্রিন দিয়ে ক্লিক করে, তাহলেও যাতে চ্যানেল চেঞ্জ হয়
-        focusableElements.forEach(elem => {
-            elem.addEventListener('click', function() {
-                currentIndex = parseInt(this.getAttribute('data-index'));
-                const streamUrl = this.getAttribute('data-url');
+        // মাউস ক্লিকের সাপোর্ট
+        container.addEventListener('click', function(e) {
+            const target = e.target.closest('.tv-focusable-item');
+            if (target) {
+                currentFocusIndex = activeElements.indexOf(target);
+                const streamUrl = target.getAttribute('data-url');
                 const iframe = document.getElementById('tv-iframe');
-                if (iframe) {
-                    iframe.src = streamUrl;
-                }
-            });
+                if (iframe) iframe.src = streamUrl;
+            }
         });
     }
 
-    // রিমোট দিয়ে নিচে বা উপরে গেলে চ্যানেল লিস্ট স্বয়ংক্রিয়ভাবে স্ক্রোল করার ফাংশন
-    function scrollToActiveChannel(element) {
+    function scrollToElement(element) {
         element.scrollIntoView({
             behavior: 'smooth',
             block: 'nearest'
         });
     }
 });
-
-// রাইট ক্লিক বন্ধ করার ফাংশন
-function disableClick() {
-    document.oncontextmenu = function() { return false; };
-}
