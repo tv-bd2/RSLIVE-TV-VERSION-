@@ -29,19 +29,20 @@
             font-family: Arial, sans-serif;
         }
 
-        /* টিভির জন্য ফ্লেক্সবক্স মেইন কন্টেইনার */
+        /* মেইন টিভি লেআউট */
         .tv-main-layout {
             display: flex;
             flex-direction: row;
             width: 100%;
-            height: 76vh; /* প্লেয়ার ও সাইডবারের ফিক্সড হাইট */
+            height: 76vh;
             padding: 15px;
             gap: 15px;
             box-sizing: border-box;
         }
 
+        /* ভিডিও প্লেয়ার এরিয়া */
         .tv-view-container {
-            flex: 3; /* প্লেয়ার স্ক্রিন বড় থাকবে */
+            flex: 1.8;
             height: 100%;
         }
 
@@ -61,25 +62,73 @@
             height: 100%;
         }
 
+        /* সাইডবার এরিয়া */
         .channel-list-container {
-            flex: 1; /* সাইডবার চ্যানেল লিস্ট */
+            flex: 1.2;
             height: 100%;
             background: #0a0a0a;
             border: 1px solid #222;
             border-radius: 12px;
-            padding: 10px;
+            padding: 12px;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        /* টিভি রিমোট ফোকাস স্টাইল - প্রিমিয়াম নিয়ন রিং */
+        /* টিভি ফ্রেন্ডলি প্রিমিয়াম সার্চবার */
+        .tv-search-wrapper {
+            width: 100%;
+        }
+
+        .tv-search-input {
+            width: 100%;
+            background: #151515;
+            border: 2px solid #252525;
+            color: #fff;
+            padding: 10px 15px;
+            font-size: 14px;
+            border-radius: 8px;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        /* সার্চবার রিমোট ফোকাস স্টাইল */
+        .tv-search-input:focus {
+            border-color: #ff9100 !important;
+            box-shadow: 0 0 10px rgba(255, 145, 0, 0.5);
+            background: #202020;
+        }
+
+        /* চ্যানেল লিস্ট ৩ লাইন গ্রিড সিস্টেম */
+        .tv-grid-scroll {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 4px;
+        }
+
+        .thumbnail-slider {
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* ফিক্সড ৩ লাইন */
+            gap: 10px;
+            list-style: none;
+        }
+
+        /* রিমোট ফোকাস নিয়ন রিং */
         .thumbnail-slider li a:focus {
             outline: none;
-            border: 4px solid #00d2ff !important;
+            border: 3px solid #00d2ff !important;
             box-shadow: 0 0 15px #00d2ff;
-            transform: scale(1.03);
-            border-radius: 8px;
+            transform: scale(1.05);
+            border-radius: 6px;
             display: block;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
+            z-index: 5;
+            position: relative;
         }
 
         .marquee-container {
@@ -232,15 +281,20 @@
         
         <div class="tv-view-container">
             <div class="embed-responsive">
-                <iframe name="player"
-                    id="tv-iframe"
-                    allowfullscreen
-                    src="channel.html"></iframe>
+                <iframe name="player" id="tv-iframe" allowfullscreen src="channel.html"></iframe>
             </div>
         </div>
 
-        <div class="channel-list-container" id="sidebar-list">
-            <ul class="thumbnail-slider" id="channel-container"></ul>
+        <div class="channel-list-container">
+            
+            <div class="tv-search-wrapper">
+                <input type="text" id="tv-search" class="tv-search-input" placeholder="চ্যানেল খুঁজুন..." tabindex="0">
+            </div>
+
+            <div class="tv-grid-scroll" id="sidebar-list">
+                <ul class="thumbnail-slider" id="channel-container"></ul>
+            </div>
+
         </div>
 
     </div>
@@ -248,7 +302,7 @@
     <div class="marquee-container">
         <div class="notice-label">NOTICE</div>
         <marquee scrollamount="5">
-            ⚠️ বর্তমানে আমাদের ওয়েব সাইট আপডেট চলছে। রিমোটের Arrow Keys দিয়ে চ্যানেল সিলেক্ট করুন এবং OK চাপুন।
+            ⚠️ রিমোটের Arrow Keys দিয়ে সার্চবার এবং ৩ লাইনের চ্যানেল সিলেক্ট করুন এবং OK চাপুন।
         </marquee>
     </div>
 
