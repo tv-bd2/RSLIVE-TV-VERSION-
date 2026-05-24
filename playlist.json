@@ -20,25 +20,19 @@
   {
     "name": "GAZI TV",
     "image": "https://tvassets.roarzone.net/images/gazi-tv.png",
-    "url": "https://rs-player.netlify.app/jw-player?url=https://edge2.roarzone.net:8447/roarzone/edge5/gazi-tv/index.m3u8",
+    "url": "https://edge2.roarzone.net:8447/roarzone/edge5/gazi-tv/index.m3u8",
     "category": "Entertainment"
   },
   {
     "name": "ATN BANGLA",
     "image": "https://tvassets.roarzone.net/images/atn-bangla.png",
-    "url": "https://rs-player.netlify.app/jw-player?url=https://edge2.roarzone.net:8447/roarzone/edge5/atn-bangla/index.m3u8",
+    "url": "https://edge2.roarzone.net:8447/roarzone/edge5/atn-bangla/index.m3u8",
     "category": "Entertainment"
   },
   {
     "name": "ATN NEWS",
     "image": "https://tvassets.roarzone.net/images/atn-news.png",
-    "url": "https://rs-player.netlify.app/jw-player?url=https://edge2.roarzone.net:8447/roarzone/edge5/atn-news/index.m3u8",
-    "category": "News"
-  },
-  {
-    "name": "REPUBLIC TV BHARAT",
-    "image": "https://tvassets.roarzone.net/images/republic-tv-bharat.png",
-    "url": "https://rs-player.netlify.app/jw-player?url=https://edge2.roarzone.net:8447/roarzone/edge5/republic-tv-bharat/index.m3u8",
+    "url": "https://edge2.roarzone.net:8447/roarzone/edge5/atn-news/index.m3u8",
     "category": "News"
   }
 ]
