@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             allChannels = data;
             
-            // ১. ইউনিক ক্যাটাগরিগুলো খুঁজে বের করা এবং "All" অপশন যোগ করা
+            // ১. ইউনিক ক্যাটাগরি বের করা এবং 'All' যোগ করা
             const categories = ['All'];
             data.forEach(channel => {
                 if (channel.category && !categories.includes(channel.category)) {
@@ -17,32 +17,30 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // ২. প্লেয়ারের নিচে ক্যাটাগরি বাটনগুলো রেন্ডার করা
+            // ২. প্লেয়ারের নিচে ক্যাটাগরি বাটন তৈরি করা
             renderCategories(categories);
 
-            // ৩. প্রথমবার সম্পূর্ণ চ্যানেল লিস্ট প্রদর্শন করা
+            // ৩. প্রথমবার সব চ্যানেল দেখানো
             displayChannels(allChannels);
         })
         .catch(error => {
             console.error('Error loading playlist:', error);
-            channelContainer.innerHTML = '<p style="color:red; font-size:10px; padding:10px;">Error loading channels!</p>';
+            channelContainer.innerHTML = '<p style="color:#ff4444; font-size:12px; padding:10px;">Error loading channels!</p>';
         });
 
-    // ক্যাটাগরি বাটন তৈরি করার ফাংশন
+    // ক্যাটাগরি বাটন রেন্ডার করার ফাংশন
     function renderCategories(categories) {
         categoryContainer.innerHTML = '';
         categories.forEach((cat, index) => {
             const button = document.createElement('button');
             button.className = 'category-btn';
-            if (index === 0) button.classList.add('active'); // 'All' বাটন ডিফল্ট সক্রিয় থাকবে
+            if (index === 0) button.classList.add('active'); // ডিফল্ট 'All' একটিভ থাকবে
             button.innerText = cat;
             
             button.addEventListener('click', () => {
-                // একটিভ ক্লাস টগল করা
                 document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
 
-                // ফিল্টারিং লজিক
                 if (cat === 'All') {
                     displayChannels(allChannels);
                 } else {
@@ -55,18 +53,18 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // চ্যালেন লিস্ট দেখানোর ফাংশন
+    // চ্যালেন লিস্ট শো করার ফাংশન (আপনার ওরিজিনাল ওনক্লিক মেথডসহ)
     function displayChannels(channels) {
         channelContainer.innerHTML = '';
         if (channels.length === 0) {
-            channelContainer.innerHTML = '<p style="color:#777; font-size:12px; padding:15px;">No channels found.</p>';
+            channelContainer.innerHTML = '<p style="color:#777; font-size:12px; padding:15px; text-align:center;">No channels available.</p>';
             return;
         }
 
         channels.forEach(channel => {
             const li = document.createElement('li');
             li.innerHTML = `
-                <a href="${channel.url}" target="player">
+                <a href="javascript:void(0);" onclick="player.location.href='${channel.url}'">
                     <img src="${channel.image}" alt="${channel.name}">
                 </a>
             `;
@@ -75,7 +73,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// রাইট ক্লিক বন্ধ করার অপশন
-function disableClick() {
-    document.oncontextmenu = function() { return false; };
-}
+// রাইট ক্লিক প্রটেকশন
+document.addEventListener('contextmenu', event => event.preventDefault());
