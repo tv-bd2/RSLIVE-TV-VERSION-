@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRBZH98TKH"></script>
     <script>
@@ -17,52 +17,6 @@
     <link rel="shortcut icon" type="x-icon" href="https://i.postimg.cc/mD1VCt2C/RS-Live.png">
     <link href="bootstrap.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: #000;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-        .tv-view .embed-responsive {
-            border: 1px solid #222;
-            border-radius: 8px;
-            background: #000;
-            overflow: hidden;
-        }
-        iframe {
-            border: 0 !important;
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-        .marquee-container {
-            background: #121212;
-            color: #ffffff;
-            padding: 8px 0;
-            display: flex;
-            align-items: center;
-            border-top: 1px solid #333;
-            border-bottom: 1px solid #333;
-        }
-        .notice-label {
-            background: #ff4444;
-            color: #fff;
-            padding: 2px 10px;
-            margin-left: 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 11px;
-            flex-shrink: 0;
-        }
-        .footer-premium {
-            background: #0a0a0a;
-            padding: 20px 0 30px 0;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
 
@@ -70,7 +24,7 @@
         <div class="row">
             <div class="col-md-9 tv-view">
                 <div class="embed-responsive embed-responsive-16by9">
-                    <iframe name="player" src="channel.html" allowfullscreen></iframe>
+                    <iframe name="player" id="main-player" src="channel.html" allowfullscreen></iframe>
                 </div>
 
                 <div class="category-wrapper">
@@ -94,19 +48,17 @@
     <footer class="footer-premium">
         <div class="container">
             <div class="tg-card">
-                <h5 style="color:#fff; margin-bottom:5px; font-size:16px;">সাপোর্ট প্রয়োজন?</h5>
-                <p style="color:#777; font-size:11px; margin-bottom:5px;">আপডেট ও চ্যানেল রিকোয়েস্টের জন্য আমাদের টেলিগ্রাম গ্রুপে যোগ দিন।</p>
+                <h5>সাপোর্ট প্রয়োজন?</h5>
+                <p>আপডেট ও চ্যানেল রিকোয়েস্টের জন্য আমাদের টেলিগ্রাম গ্রুপে যোগ দিন।</p>
                 <a href="https://t.me/rslivetv" target="_blank" class="telegram-btn">JOIN TELEGRAM</a>
             </div>
-            <div class="copyright" style="color: #555; font-size: 12px; margin-top: 15px;">
+            
+            <div class="copyright">
                 © 2026 RS LIVE TV | All Rights Reserved
             </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
-    <script>
-        document.addEventListener('contextmenu', event => event.preventDefault());
-    </script>
 </body>
 </html>
