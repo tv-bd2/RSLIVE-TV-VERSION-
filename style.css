@@ -3,44 +3,45 @@
 a {
     color: #ffffff;
     text-decoration: none;
-    font-family: Arial, sans-serif;
+    font-size: xx-large;
+    font-family: cursive;
 }
 body {
-    background: #000000;
+    background: #121212;
     color: #fff;
 }
-
-.tv-grid-scroll { 
-    height: 100% !important; 
-    overflow-y: auto !important; 
-    overflow-x: hidden !important; 
+a {
+    cursor: pointer;
+    font-size: 15px;
 }
 
-.thumbnail-slider li { 
-    display: block !important;
-    width: 100%;
+.tv-area { margin-top: 50px; }
+.channel-list { padding-left: 0; height: 520px; white-space: nowrap; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
+.thumbnail-slider { margin:0; padding:0;  }
+.thumbnail-slider li { list-style: none; margin-bottom: 10px; }
+.thumbnail-slider li img { width: 100%; height: auto !important; border-radius: 5px; }
+
+
+ .channel-list::-webkit-scrollbar {
+ width: 12px;
+ border-radius: 10px;
+ background-color: #F5F5F5;
+}
+ .channel-list::-webkit-scrollbar-thumb {
+ border-radius: 10px;
+ -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+ background-color: #D62929;
 }
 
-.thumbnail-slider li a {
-    display: block !important;
-    border: 2px solid #1a1a1a;
-    border-radius: 6px;
-    overflow: hidden;
-    background: #111;
-}
 
-.thumbnail-slider li img { 
-    width: 100%; 
-    height: auto !important; 
-    display: block;
-}
-
-/* প্রফেশনাল ডার্ক স্ক্রোলবার */
-.tv-grid-scroll::-webkit-scrollbar {
-    width: 4px;
-    background-color: #000;
-}
-.tv-grid-scroll::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background-color: #222;
+ @media (max-width: 1199px) {
+	 .channel-list { height: 425px; }
+ }
+  @media (max-width: 990px) {
+	  .channel-list { padding: 10px 15px; height: auto !important; overflow-y: hidden; overflow-x: auto; }
+	  .thumbnail-slider li { display: inline-block; margin: 0 5px 0 0; }
+	  .thumbnail-slider li a { display: block; width: 80px; }
+  }
+@media (max-width: 410px) {
+	.thumbnail-slider li a { width: 50px; }
 }

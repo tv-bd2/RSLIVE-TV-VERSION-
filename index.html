@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-DRBZH98TKH"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -12,9 +13,7 @@
       gtag('config', 'G-DRBZH98TKH');
     </script>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2938711937593078" crossorigin="anonymous"></script>
-
-    <title>RS Live TV - TV Version</title>
+    <title>RS Live TV</title>
 
     <link rel="shortcut icon" type="x-icon" href="https://i.postimg.cc/mD1VCt2C/RS-Live.png">
     <link href="bootstrap.min.css" rel="stylesheet">
@@ -23,124 +22,32 @@
     <style>
         body {
             background: #000;
-            overflow: hidden;
+            overflow-x: hidden;
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
         }
-
-        /* মেইন টিভি লেআউট */
-        .tv-main-layout {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            height: 76vh;
-            padding: 15px;
-            gap: 15px;
-            box-sizing: border-box;
-        }
-
-        /* ভিডিও প্লেয়ার এরিয়া */
-        .tv-view-container {
-            flex: 1.8;
-            height: 100%;
-        }
-
-        .tv-view-container .embed-responsive {
-            height: 100%;
-            border: 2px solid #1a1a1a;
-            border-radius: 12px;
+        .tv-view .embed-responsive {
+            border: 1px solid #222;
+            border-radius: 8px;
             background: #000;
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
         }
-
         iframe {
             border: 0 !important;
             display: block;
             width: 100%;
             height: 100%;
         }
-
-        /* সাইডবার এরিয়া */
-        .channel-list-container {
-            flex: 1.2;
-            height: 100%;
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-radius: 12px;
-            padding: 12px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        /* টিভি ফ্রেন্ডলি প্রিমিয়াম সার্চবার */
-        .tv-search-wrapper {
-            width: 100%;
-        }
-
-        .tv-search-input {
-            width: 100%;
-            background: #151515;
-            border: 2px solid #252525;
-            color: #fff;
-            padding: 10px 15px;
-            font-size: 14px;
-            border-radius: 8px;
-            outline: none;
-            box-sizing: border-box;
-            transition: all 0.2s ease;
-        }
-
-        /* সার্চবার রিমোট ফোকাস স্টাইল */
-        .tv-search-input:focus {
-            border-color: #ff9100 !important;
-            box-shadow: 0 0 10px rgba(255, 145, 0, 0.5);
-            background: #202020;
-        }
-
-        /* চ্যানেল লিস্ট ৩ লাইন গ্রিড সিস্টেম */
-        .tv-grid-scroll {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding-right: 4px;
-        }
-
-        .thumbnail-slider {
-            margin: 0;
-            padding: 0;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* ফিক্সড ৩ লাইন */
-            gap: 10px;
-            list-style: none;
-        }
-
-        /* রিমোট ফোকাস নিয়ন রিং */
-        .thumbnail-slider li a:focus {
-            outline: none;
-            border: 3px solid #00d2ff !important;
-            box-shadow: 0 0 15px #00d2ff;
-            transform: scale(1.05);
-            border-radius: 6px;
-            display: block;
-            transition: all 0.15s ease;
-            z-index: 5;
-            position: relative;
-        }
-
         .marquee-container {
-            background: #0a0a0a;
+            background: #121212;
             color: #ffffff;
-            padding: 6px 0;
+            padding: 8px 0;
             display: flex;
             align-items: center;
-            border-top: 1px solid #222;
-            border-bottom: 1px solid #222;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
         }
-
         .notice-label {
             background: #ff4444;
             color: #fff;
@@ -151,26 +58,24 @@
             font-size: 11px;
             flex-shrink: 0;
         }
-
         .footer-premium {
-            background: #050505;
-            padding: 10px 0 15px 0;
+            background: #0a0a0a;
+            padding: 20px 0 30px 0;
             text-align: center;
         }
-
         .tio-style-banner-fixed {
             width: 320px;
             height: 50px;
-            background: url('https://static.vecteezy.com/system/resources/previews/042/672/844/non_2x/national-flag-of-bangladesh-bd-vector.jpg') center/cover;
+            background: url('https://png.pngtree.com/background/20250208/original/pngtree-smooth-gradient-chaotic-texture-in-abstract-dark-background-with-black-shade-picture-image_15219959.jpg') center/cover;
             position: relative;
             overflow: hidden;
             border-radius: 6px;
             border: 1px solid #333;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             display: flex;
             align-items: center;
-            margin: 5px auto;
+            margin: 10px auto;
         }
-
         .tio-style-banner-fixed::after {
             content: '';
             position: absolute;
@@ -178,18 +83,21 @@
             left: -150%;
             width: 60%;
             height: 100%;
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            background: linear-gradient(
+                to right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.2) 50%,
+                rgba(255,255,255,0) 100%
+            );
             transform: skewX(-25deg);
             animation: smoke-shine 4s infinite;
             z-index: 3;
         }
-
         @keyframes smoke-shine {
             0% { left: -150%; }
             40% { left: 150%; }
             100% { left: 150%; }
         }
-
         .banner-overlay {
             position: absolute;
             top: 0;
@@ -199,7 +107,6 @@
             background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,210,255,0.1) 100%);
             z-index: 1;
         }
-
         .content-wrapper {
             position: relative;
             z-index: 2;
@@ -209,17 +116,15 @@
             padding: 0 10px;
             justify-content: space-between;
         }
-
         .brand-logo-fixed {
             font-weight: 900;
             font-size: 13px;
             font-style: italic;
             white-space: nowrap;
+            flex-shrink: 0;
         }
-
         .rs-live { color: #fff; }
         .tv-text { color: #ff9100; text-shadow: 0 0 5px #ff9100; }
-
         .text-section-fixed {
             flex-grow: 1;
             text-align: center;
@@ -227,7 +132,6 @@
             flex-direction: column;
             gap: 2px;
         }
-
         .main-tags {
             display: flex;
             justify-content: center;
@@ -236,12 +140,16 @@
             font-weight: 800;
             text-transform: uppercase;
         }
-
         .tag-cricket { color: #FFD700; }
         .tag-football { color: #00FF00; }
         .tag-tv { color: #00D2FF; }
-        .sub-text { font-size: 9px; color: #ffffff; margin: 0; font-weight: bold; text-shadow: 1px 1px 2px #000; }
-
+        .sub-text {
+            font-size: 9px;
+            color: #ffffff;
+            margin: 0;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+        }
         .live-circle {
             background: #ff0000;
             color: white;
@@ -252,8 +160,8 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            flex-shrink: 0;
         }
-
         .pulse {
             width: 5px;
             height: 5px;
@@ -261,48 +169,70 @@
             border-radius: 50%;
             animation: pulse-animation 1s infinite;
         }
-
         @keyframes pulse-animation {
             0% { transform: scale(0.95); opacity: 1; }
             100% { transform: scale(1.5); opacity: 0; }
         }
-
+        .tg-card {
+            background: #161616;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #222;
+            display: block;
+            width: 320px;
+            margin: 15px auto;
+        }
+        .telegram-btn {
+            display: inline-block;
+            background: #0088cc;
+            color: #fff !important;
+            padding: 8px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none !important;
+            margin-top: 10px;
+            font-size: 13px;
+            font-family: 'Courier New', Courier, monospace;
+            font-style: italic;
+        }
+        .ad-box {
+            margin: 15px auto;
+            width: 320px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
         .copyright {
             color: #444;
             font-size: 11px;
-            margin-top: 5px;
+            margin-top: 15px;
         }
     </style>
 </head>
 
-<body onload="disableClick()">
+<body>
 
-    <div class="tv-main-layout">
-        
-        <div class="tv-view-container">
-            <div class="embed-responsive">
-                <iframe name="player" id="tv-iframe" allowfullscreen src="channel.html"></iframe>
+    <div class="container tv-area">
+        <div class="row">
+            <div class="col-xs-12 col-md-10 tv-view">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe name="player" class="embed-responsive-item" allowfullscreen src="channel.html"></iframe>
+                </div>
             </div>
-        </div>
-
-        <div class="channel-list-container">
-            
-            <div class="tv-search-wrapper">
-                <input type="text" id="tv-search" class="tv-search-input" placeholder="চ্যানেল খুঁজুন..." tabindex="0">
-            </div>
-
-            <div class="tv-grid-scroll" id="sidebar-list">
+            <div class="col-xs-12 col-md-2 channel-list">
                 <ul class="thumbnail-slider" id="channel-container"></ul>
             </div>
-
         </div>
-
     </div>
 
     <div class="marquee-container">
         <div class="notice-label">NOTICE</div>
-        <marquee scrollamount="5">
-            ⚠️ রিমোটের Arrow Keys দিয়ে সার্চবার এবং ৩ লাইনের চ্যানেল সিলেক্ট করুন এবং OK চাপুন।
+        <marquee scrollamount="6" onmouseover="this.stop()" onmouseout="this.start()">
+            ⚠️ বর্তমানে আমাদের ওয়েব সাইট আপডেট চলছে, আপডেট চলাকালীন সময় কিছু চ্যানেল ডাউন হতে পারে। 
+            <span style="color: aqua; font-weight: bold;">টিভি চ্যানেল প্লে হতে ৫ থেকে ১০ সেকেন্ড টাইম নিতে পারে।</span> 
+            💡 বিরক্তিকর বিজ্ঞাপন ছাড়া টিভি দেখতে ভিডিও প্লেয়ারের নিচে ডান কোণায় ক্লিক করে 
+            <span style="color: #00FF00; font-weight: bold;">"Full Screen" মুডে ভিডিও দেখুন</span>, তাহলে কোনো অ্যাড আপনার সামনে আসবে না! ধন্যবাদ ⛔
         </marquee>
     </div>
 
@@ -326,17 +256,40 @@
                     <div class="live-circle"><span class="pulse"></span>LIVE</div>
                 </div>
             </div>
+
+            <div class="tg-card">
+                <h5 style="color:#fff; margin-bottom:5px; font-size:16px;">সাপোর্ট প্রয়োজন?</h5>
+                <p style="color:#777; font-size:11px; margin-bottom:5px;">আপডেট ও চ্যানেল রিকোয়েস্টের জন্য আমাদের টেলিগ্রাম গ্রুপে যোগ দিন।</p>
+                <a href="https://t.me/rslivetv" target="_blank" class="telegram-btn">JOIN TELEGRAM</a>
+            </div>
+
+            <!-- Adsterra Banner -->
+            <div class="ad-box">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '774c0e371455f6476668178b5faae5ab',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/774c0e371455f6476668178b5faae5ab/invoke.js"></script>
+            </div>
+
             <div class="copyright">
-                © 2026 RS LIVE TV | TV Edition
+                © 2026 RS LIVE TV | All Rights Reserved
             </div>
         </div>
     </footer>
 
     <script src="script.js"></script>
     <script>
-        function disableClick() {
-            document.oncontextmenu = function () { return false; };
-        }
+        // রাইট ক্লিক বন্ধ রাখার স্ক্রিপ্ট
+        document.addEventListener('contextmenu', event => event.preventDefault());
     </script>
+    
+    <!-- Adsterra Social Bar -->
+    <script src="https://pl26377172.effectivecpmnetwork.com/d7/8b/93/d78b9343b29d8ff89244b094b359e591.js"></script>
 </body>
 </html>
