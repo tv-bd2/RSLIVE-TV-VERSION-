@@ -58,7 +58,7 @@
             flex-shrink: 0;
         }
         
-        /* নতুন ক্যাটাগরি এবং নামের সুন্দর স্টাইল */
+        /* ক্যাটাগরি বক্স ডিজাইন */
         .category-container {
             display: flex;
             gap: 8px;
@@ -66,7 +66,6 @@
             overflow-x: auto;
             padding-bottom: 8px;
         }
-        /* ব্রাউজারের ডিফল্ট স্ক্রলবার হাইড করার জন্য */
         .category-container::-webkit-scrollbar {
             display: none;
         }
@@ -87,35 +86,65 @@
             border-color: #ff4444;
         }
         
-        /* লোগোর নিচে চ্যানেলের নামের ফিক্সড সাইজ */
-        .channel-title-text {
-            display: block;
-            color: #ffffff !important;
-            font-size: 12px !important; /* বড় ফন্ট ফিক্স করা হলো */
-            font-family: Arial, sans-serif !important;
-            text-align: center;
-            margin-top: 6px;
-            margin-bottom: 5px;
-            font-weight: normal;
-            text-transform: uppercase;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+        /* চ্যানেল লিস্ট কন্টেইনার (মোবাইলে ২ কলাম গ্রিড করার জন্য) */
+        .thumbnail-slider {
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* মোবাইলে পাশাপাশি ২টি করে আসবে */
+            gap: 12px;
         }
 
-        /* রিমোট কন্ট্রোল দিয়ে সিলেক্ট করলে বা মাউস নিলে হাইলাইট */
+        /* কম্পিউটার বা বড় স্ক্রিনের জন্য ১টি কলাম (আপনার আগের ডিজাইন অনুযায়ী) */
+        @media (min-width: 1200px) {
+            .thumbnail-slider {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .thumbnail-slider li {
+            list-style: none;
+            margin: 0 !important;
+        }
+
         .thumbnail-slider li a {
             display: block;
             outline: none;
             border: 2px solid transparent;
             border-radius: 6px;
-            padding: 2px;
+            padding: 3px;
             transition: transform 0.2s;
+            background: #111;
         }
-        .thumbnail-slider li a:focus, .thumbnail-slider li a.remote-focus {
+
+        /* রিমোট কন্ট্রোল ফোকাস বা মাউস হোভার ইফেক্ট */
+        .thumbnail-slider li a:focus, .thumbnail-slider li a.remote-focus, .thumbnail-slider li a:hover {
             border-color: #ff4444;
             background: rgba(255, 68, 68, 0.1);
             transform: scale(1.02);
+        }
+
+        .thumbnail-slider li img {
+            width: 100%;
+            height: auto !important;
+            border-radius: 4px;
+            display: block;
+        }
+        
+        /* লোগোর নিচের নামের পারফেক্ট সাইজ */
+        .channel-title-text {
+            display: block;
+            color: #ffffff !important;
+            font-size: 11px !important; 
+            font-family: Arial, sans-serif !important;
+            text-align: center;
+            margin-top: 6px;
+            margin-bottom: 2px;
+            font-weight: normal;
+            text-transform: uppercase;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
     </style>
 </head>
