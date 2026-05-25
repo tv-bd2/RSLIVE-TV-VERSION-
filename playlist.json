@@ -1,20 +1,26 @@
 [
   {
-    "name": "BAN vs PAK LIVE",
+    "name": "BAN vs PAK",
     "image": "https://assets-prod.services.toffeelive.com/w_480,q_75,f_webp/ljE2lZ0BNnOkwJLW9lrg/posters/b4bee75a-b8a3-4594-b562-6e3910d71625.png",
-    "url": "https://tvsen7.aynaott.com/tsports-hd/index.m3u8",
+    "url": "https://rs-player.netlify.app/jw-player?url=https://tvsen7.aynaott.com/tsports-hd/index.m3u8",
     "category": "Sports"
   },
   {
     "name": "T SPORTS HD",
     "image": "https://tvassets.roarzone.net/images/t-sports-hd.png",
-    "url": "https://tvsen7.aynaott.com/tsports-hd/index.m3u8",
+    "url": "https://rs-player.netlify.app/jw-player?url=https://tvsen7.aynaott.com/tsports-hd/index.m3u8",
     "category": "Sports"
   },
   {
-    "name": "FOX WEATHER",
-    "image": "https://tvassets.roarzone.net/images/fox-weather.png",
-    "url": "https://edge2.roarzone.net:8447/roarzone/edge5/fox-weather/index.m3u8",
-    "category": "Live TV"
+    "name": "NEWS 1 INDIA",
+    "image": "https://tvassets.roarzone.net/images/news-1-india.png",
+    "url": "https://rs-player.netlify.app/jw-player?url=https://edge2.roarzone.net:8447/roarzone/edge5/news-1-india/index.m3u8",
+    "category": "News"
+  },
+  {
+    "name": "GAZI TV",
+    "image": "https://tvassets.roarzone.net/images/gazi-tv.png",
+    "url": "https://rs-player.netlify.app/jw-player?url=https://edge2.roarzone.net:8447/roarzone/edge5/gazi-tv/index.m3u8",
+    "category": "Entertainment"
   }
 ]
