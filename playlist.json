@@ -1,38 +1,20 @@
 [
   {
-    "name": "BAN vs PAK",
+    "name": "BAN vs PAK LIVE",
     "image": "https://assets-prod.services.toffeelive.com/w_480,q_75,f_webp/ljE2lZ0BNnOkwJLW9lrg/posters/b4bee75a-b8a3-4594-b562-6e3910d71625.png",
-    "url": "https://rs-player.netlify.app/jw-player?url=https://tvsen7.aynaott.com/tsports-hd/index.m3u8",
+    "url": "https://tvsen7.aynaott.com/tsports-hd/index.m3u8",
     "category": "Sports"
   },
   {
     "name": "T SPORTS HD",
     "image": "https://tvassets.roarzone.net/images/t-sports-hd.png",
-    "url": "https://rs-player.netlify.app/jw-player?url=https://tvsen7.aynaott.com/tsports-hd/index.m3u8",
+    "url": "https://tvsen7.aynaott.com/tsports-hd/index.m3u8",
     "category": "Sports"
   },
   {
-    "name": "Star Sports 1",
-    "image": "https://i.postimg.cc/SNSpfbQr/Star-Sports-1-HD.png",
-    "url": "https://rs-player.netlify.app/jw-player?url=https://tvsen7.aynaott.com/sspts1/index.m3u8",
-    "category": "Sports"
-  },
-  {
-    "name": "GAZI TV",
-    "image": "https://tvassets.roarzone.net/images/gazi-tv.png",
-    "url": "https://edge2.roarzone.net:8447/roarzone/edge5/gazi-tv/index.m3u8",
-    "category": "Entertainment"
-  },
-  {
-    "name": "ATN BANGLA",
-    "image": "https://tvassets.roarzone.net/images/atn-bangla.png",
-    "url": "https://edge2.roarzone.net:8447/roarzone/edge5/atn-bangla/index.m3u8",
-    "category": "Entertainment"
-  },
-  {
-    "name": "ATN NEWS",
-    "image": "https://tvassets.roarzone.net/images/atn-news.png",
-    "url": "https://edge2.roarzone.net:8447/roarzone/edge5/atn-news/index.m3u8",
-    "category": "News"
+    "name": "FOX WEATHER",
+    "image": "https://tvassets.roarzone.net/images/fox-weather.png",
+    "url": "https://edge2.roarzone.net:8447/roarzone/edge5/fox-weather/index.m3u8",
+    "category": "Live TV"
   }
 ]
