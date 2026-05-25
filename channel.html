@@ -1,182 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
-<title>Rs Live TV</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>RS LIVE TV - Player Engine</title>
 
-<!-- JW Player Script -->
-<script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js"></script>
-<script>
-jwplayer.key="Khpp2dHxlBJHC8MCmLnBuV2jK/DwDnJMniwF6EO9HC/riJ712ZmbHg==";
-</script>
+    <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js"></script>
+    <script>
+        jwplayer.key="Khpp2dHxlBJHC8MCmLnBuV2jK/DwDnJMniwF6EO9HC/riJ712ZmbHg==";
+    </script>
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-html,body{
-width:100%;
-height:100%;
-background:#000;
-overflow:hidden;
-font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-
-#player{
-width:100% !important;
-height:100% !important;
-position: absolute;
-top: 0;
-left: 0;
-}
-
-/* নেটলিফাই প্লেয়ারের মতো ক্লিন ও মিনিমাল লোডার */
-#loader {
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000000;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:9999;
-flex-direction:column;
-transition: opacity 0.3s ease;
-}
-
-/* ওই সাইটের মতো ম্যাটেরিয়াল/স্মুথ স্পিনার */
-.spinner {
-width: 50px;
-height: 50px;
-border: 3px solid rgba(255, 255, 255, 0.1);
-border-radius: 50%;
-border-top-color: #fff; 
-animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-to { transform: rotate(360deg); }
-}
-
-#loader p {
-margin-top: 15px;
-color: #eee;
-font-size: 15px;
-letter-spacing: 0.5px;
-font-weight: 400;
-}
-
-.jwplayer {
-height:100% !important;
-width:100% !important;
-}
-
-/* ফিক্সড: জুম হবে না, ভিডিওর কোনো অংশ কাটবে না */
-.jw-video {
-object-fit: fill !important; /* fill দেওয়ার কারণে ভিডিও কাটা পড়বে না */
-width: 100vw !important;
-height: 100vh !important;
-}
-
-:-webkit-full-screen {
-  width: 100% !important;
-  height: 100% !important;
-}
-</style>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
+        #player { width: 100% !important; height: 100% !important; position: absolute; top: 0; left: 0; }
+        
+        /* Premium Minimal Loader */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; display: flex; justify-content: center;
+            align-items: center; z-index: 9999; flex-direction: column;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 45px; height: 45px;
+            border: 3px solid rgba(0, 240, 255, 0.1);
+            border-radius: 50%; border-top-color: #00f0ff;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        #loader-text {
+            color: #a0a0ab; font-size: 13px; font-family: sans-serif; letter-spacing: 0.5px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
 </head>
-
 <body>
 
-<div id="loader">
-<div class="spinner"></div>
-<p id="loader-text">Loading Stream...</p>
-</div>
+    <div id="loader">
+        <div class="spinner"></div>
+        <div id="loader-text">Connecting to Secure Stream Server...</div>
+    </div>
 
-<div id="player"></div>
+    <div id="player"></div>
 
-<script>
-function getStreamUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('url');
-}
+    <script>
+        // URL থেকে স্ট্রিম লিঙ্কটি নেওয়ার জন্য প্যারামিটার মেকানিজম
+        const urlParams = new URLSearchParams(window.location.search);
+        let streamUrl = urlParams.get('url');
 
-const streamUrl = getStreamUrl();
-const player = jwplayer("player");
-
-const defaultStream = "https://srknowapp.ncare.live/srktvhlswodrm/srktv.stream/tracks-v1a1/mono.m3u8";
-const finalStream = streamUrl ? streamUrl : defaultStream;
-
-player.setup({
-playlist:[{
-title:"",
-sources:[
-{
-file: finalStream,
-type: "hls",
-label: "HD"
-}
-]
-}],
-width:"100%",
-height:"100%",
-aspectratio:"16:9",
-autostart:true,
-mute:false,
-primary:"html5",
-stretching:"fill", /* প্লেয়ার লেভেলেও স্ট্রেচিং fill রাখা হলো */
-controls:true
-});
-
-/* ফুলস্ক্রিন ইভেন্ট হ্যান্ডলার */
-player.on("fullscreen", function(event){
-    if(event.fullscreen) {
-        if (screen.orientation && screen.orientation.lock) {
-            screen.orientation.lock("landscape").catch(function(error) {
-                console.log("Orientation lock ignored: ", error);
-            });
+        // যদি সরাসরি লিঙ্ক না থাকে, ব্যাকআপ হিসেবে ডিফল্ট লিঙ্ক
+        if (!streamUrl) {
+            streamUrl = "https://tvsen7.aynaott.com/tsports-hd/index.m3u8"; 
         }
-        // ফুলস্ক্রিনেও অবজেক্ট ফিট 'fill' নিশ্চিত করা
-        setTimeout(() => {
+
+        const player = jwplayer("player").setup({
+            file: streamUrl,
+            width: "100%",
+            height: "100%",
+            autostart: true,
+            mute: false,
+            stretching: "exact", // ব্ল্যাক স্ক্রিন বা কালো বর্ডার দূর করার জন্য
+            preload: "auto",
+            hlshtml: true
+        });
+
+        // প্লেয়ার রেডি হলে লোডার হাইড হবে
+        player.on("ready", function() {
+            fadeAndHideLoader();
+        });
+
+        player.on("play", function() {
+            fadeAndHideLoader();
+            // ভিডিও স্ট্রেচিং ফোর্স অ্যাপ্লাই (কালো দাগ দূর করতে)
             const videoEl = document.querySelector('.jw-video');
             if(videoEl) videoEl.style.setProperty('object-fit', 'fill', 'important');
-        }, 100);
-    }
-});
+        });
 
-/* প্লেয়ার ইভেন্ট কন্ট্রোল */
-player.on("ready",function(){
-fadeAndHideLoader();
-});
+        player.on("buffer", function() {
+            document.getElementById("loader").style.display = "flex";
+            document.getElementById("loader").style.opacity = "1";
+            document.getElementById("loader-text").innerText = "Buffering... Please wait";
+        });
 
-player.on("error",function(){
-document.getElementById("loader").style.display="flex";
-document.getElementById("loader").style.opacity="1";
-document.getElementById("loader-text").innerHTML = "<span style='color:#ff4444;'>Stream Failed or Invalid URL</span>";
-});
+        // লিঙ্ক কাজ না করলে বা এরর আসলে সুন্দর মেসেজ দেখাবে
+        player.on("error", function(e) {
+            document.getElementById("loader").style.display = "flex";
+            document.getElementById("loader").style.opacity = "1";
+            document.getElementById("loader-text").innerHTML = `
+                <span style='color:#ff3366; font-weight:bold; text-align:center; padding:20px;'>
+                    <i class="fa-solid fa-circle-exclamation"></i> Stream Failed or Expired Token!<br>
+                    <span style="font-size:11px; color:#777; display:block; margin-top:5px;">Please check playlist link or server status.</span>
+                </span>`;
+        });
 
-player.on("buffer",function(){
-document.getElementById("loader").style.display="flex";
-document.getElementById("loader").style.opacity="1";
-document.getElementById("loader-text").innerText = "Buffering...";
-});
+        function fadeAndHideLoader() {
+            const loader = document.getElementById("loader");
+            loader.style.opacity = "0";
+            setTimeout(() => { loader.style.display = "none"; }, 500);
+        }
 
-player.on("play",function(){
-fadeAndHideLoader();
-});
-
-function fadeAndHideLoader() {
-    document.getElementById("loader").style.opacity="0";
-    setTimeout(() => { 
-        document.getElementById("loader").style.display="none"; 
-    }, 300);
-}
-</script>
-
+        // ফুলস্ক্রিন ও মোবাইল অটো-রোটেশন ফিক্স
+        player.on("fullscreen", function(event) {
+            if(event.fullscreen) {
+                if (screen.orientation && screen.orientation.lock) {
+                    screen.orientation.lock("landscape").catch(() => {});
+                }
+            }
+        });
+    </script>
 </body>
 </html>
