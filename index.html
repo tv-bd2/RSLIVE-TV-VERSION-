@@ -16,16 +16,81 @@
 
     <link rel="shortcut icon" type="x-icon" href="https://i.postimg.cc/mD1VCt2C/RS-Live.png">
     <link href="bootstrap.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
+    <link href="style.css?v=10.0" rel="stylesheet">
 
     <style>
-        body {
-            background: #000;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
+        /* 🎬 ইন্ট্রো লোডার */
+        #intro-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0f0f16 0%, #040406 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999999;
+            transition: opacity 0.5s ease, visibility 0.5s;
         }
+
+        .loader-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .welcome-text {
+            font-size: 14px;
+            color: #888899;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 5px;
+            font-weight: 600;
+            animation: fadeInText 1s ease-out;
+        }
+
+        .brand-text {
+            font-size: 32px;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 1px;
+            margin: 0;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .brand-text span {
+            color: #00f0ff;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
+        }
+
+        .loading-dots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            margin-top: 15px;
+        }
+
+        .loading-dots span {
+            width: 6px;
+            height: 6px;
+            background-color: #ff0055;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #ff0055;
+            animation: dotPulse 1.4s infinite ease-in-out both;
+        }
+
+        .loading-dots span:nth-child(1) { animation-delay: -0.32s; background-color: #00f0ff; box-shadow: 0 0 8px #00f0ff; }
+        .loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+        .loading-dots span:nth-child(3) { background-color: #00f0ff; box-shadow: 0 0 8px #00f0ff; }
+
+        @keyframes fadeInText { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes dotPulse { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
+
         .tv-view .embed-responsive {
             border: 1px solid #222;
             border-radius: 8px;
@@ -57,139 +122,224 @@
             font-size: 11px;
             flex-shrink: 0;
         }
-        
-        /* ১. ক্যাটাগরি বক্স ডিজাইন */
-        .category-container {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            overflow-x: auto;
-            padding: 5px 0 8px 0;
-        }
-        .category-container::-webkit-scrollbar {
-            display: none;
-        }
-        .category-btn {
-            background: #111;
-            color: #bbb;
-            border: 1px solid #333;
-            padding: 6px 14px;
-            border-radius: 4px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-        .category-btn.active, .category-btn:hover {
-            background: #D62929;
-            color: #fff;
-            border-color: #D62929;
-        }
-        
-        /* চ্যানেল লিস্ট এরিয়া - আপনার স্ক্রিনশটের মতো ২ কলাম করার জন্য */
-        .thumbnail-slider {
-            margin: 0;
-            padding: 0;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr) !important; /* মোবাইলে পাশাপাশি ২টি */
-            gap: 10px !important;
-        }
-
-        /* বড় স্ক্রিন বা টিভির জন্য আপনার আগের ফুল-উইডথ স্টাইল */
-        @media (min-width: 1200px) {
-            .thumbnail-slider {
-                grid-template-columns: 1fr !important;
-                gap: 10px !important;
-            }
-        }
-
-        .thumbnail-slider li {
-            list-style: none;
-            margin-bottom: 0 !important; /* মার্জিন ওভাররাইড */
-        }
-
-        /* রিমোট কন্ট্রোল টিভি ও মাউস ফোকাস বর্ডার */
-        .thumbnail-slider li a {
-            display: block;
-            outline: none;
-            border: 2px solid transparent;
-            border-radius: 6px;
-            padding: 0;
-            transition: transform 0.2s;
-            text-decoration: none;
-        }
-        .thumbnail-slider li a:focus, .thumbnail-slider li a.remote-focus {
-            border-color: #D62929;
-            background: rgba(214, 41, 41, 0.1);
-            transform: scale(1.02);
-        }
-
-        .thumbnail-slider li img {
-            width: 100%;
-            height: auto !important;
-            border-radius: 5px;
-            display: block;
-        }
-        
-        /* ৩. লোগোর নিচে চ্যানেলের নামের ডিজাইন */
-        .channel-title-text {
-            display: block;
-            color: #ffffff !important;
-            font-size: 11px !important; 
-            font-family: Arial, sans-serif !important;
+        .footer-premium {
+            background: #0a0a0a;
+            padding: 20px 0 30px 0;
             text-align: center;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            font-weight: normal;
-            text-transform: uppercase;
+        }
+        .tio-style-banner-fixed {
+            width: 320px;
+            height: 50px;
+            background: url('https://png.pngtree.com/background/20250208/original/pngtree-smooth-gradient-chaotic-texture-in-abstract-dark-background-with-black-shade-picture-image_15219959.jpg') center/cover;
+            position: relative;
             overflow: hidden;
-            text-overflow: ellipsis;
+            border-radius: 6px;
+            border: 1px solid #333;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            margin: 10px auto;
+        }
+        .tio-style-banner-fixed::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                rgba(255,255,255,0) 0%,
+                rgba(255,255,255,0.2) 50%,
+                rgba(255,255,255,0) 100%
+            );
+            transform: skewX(-25deg);
+            animation: smoke-shine 4s infinite;
+            z-index: 3;
+        }
+        @keyframes smoke-shine {
+            0% { left: -150%; }
+            40% { left: 150%; }
+            100% { left: 150%; }
+        }
+        .banner-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,210,255,0.1) 100%);
+            z-index: 1;
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0 10px;
+            justify-content: space-between;
+        }
+        .brand-logo-fixed {
+            font-weight: 900;
+            font-size: 13px;
+            font-style: italic;
             white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .rs-live { color: #fff; }
+        .tv-text { color: #ff9100; text-shadow: 0 0 5px #ff9100; }
+        .text-section-fixed {
+            flex-grow: 1;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .main-tags {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            font-size: 7.5px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .tag-cricket { color: #FFD700; }
+        .tag-football { color: #00FF00; }
+        .tag-tv { color: #00D2FF; }
+        .sub-text {
+            font-size: 9px;
+            color: #ffffff;
+            margin: 0;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+        }
+        .live-circle {
+            background: #ff0000;
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+        .pulse {
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse-animation 1s infinite;
+        }
+        @keyframes pulse-animation {
+            0% { transform: scale(0.95); opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .tg-card {
+            background: #161616;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #222;
+            display: block;
+            width: 320px;
+            margin: 15px auto;
+        }
+        .telegram-btn {
+            display: inline-block;
+            background: #0088cc;
+            color: #fff !important;
+            padding: 8px 25px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none !important;
+            margin-top: 10px;
+            font-size: 13px;
+            font-family: 'Courier New', Courier, monospace;
+            font-style: italic;
+        }
+        .ad-box {
+            margin: 15px auto;
+            width: 320px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .copyright {
+            color: #444;
+            font-size: 11px;
+            margin-top: 15px;
         }
     </style>
 </head>
+
 <body>
 
-    <div class="marquee-container">
-        <span class="notice-label">NOTICE</span>
-        <marquee direction="left" scrollamount="4" style="font-size: 13px;">
-            আমাদের RS LIVE TV অ্যাপ ও ওয়েবসাইটে আপনাকে স্বাগত! যেকোনো চ্যানেল দেখতে নিচের লোগোতে ক্লিক করুন।
-        </marquee>
-    </div>
-
-    <div class="container-fluid tv-area">
-        <div class="row">
-            <div class="col-md-9 tv-view">
-                <div class="embed-responsive embed-responsive-16by9" style="height: 520px;">
-                    <iframe name="player" src="channel.html" allowfullscreen></iframe>
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="category-container" id="category-box">
-                    <button class="category-btn active" onclick="filterCategory('All')">All</button>
-                    <button class="category-btn" onclick="filterCategory('Sports')">Sports</button>
-                    <button class="category-btn" onclick="filterCategory('News')">News</button>
-                    <button class="category-btn" onclick="filterCategory('Entertainment')">Entertainment</button>
-                </div>
-
-                <div class="channel-list">
-                    <ul class="thumbnail-slider" id="channel-container">
-                        </ul>
-                </div>
+    <div id="intro-loader">
+        <div class="loader-content">
+            <div class="welcome-text">Welcome To</div>
+            <h1 class="brand-text">RS Live <span>TV</span></h1>
+            <div class="loading-dots">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </div>
 
-    <footer class="footer-premium" style="background: #0a0a0a; padding: 20px 0 30px 0; text-align: center;">
+    <div class="container tv-area">
+        <div class="row">
+            <div class="col-xs-12 col-md-10 tv-view">
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe name="player" class="embed-responsive-item" allowfullscreen src="channel.html"></iframe>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-2 channel-list" id="scroll-wrapper">
+                <ul class="thumbnail-slider" id="channel-container"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="marquee-container">
+        <div class="notice-label">NOTICE</div>
+        <marquee scrollamount="6" onmouseover="this.stop()" onmouseout="this.start()">
+            ⚠️ বর্তমানে আমাদের ওয়েব সাইট আপডেট চলছে, আপডেট চলাকালীন সময় কিছু চ্যানেল ডাউন হতে পারে। 
+            <span style="color: aqua; font-weight: bold;">টিভি চ্যানেল প্লে হতে ৫ থেকে ১০ সেকেন্ড টাইম নিতে পারে।</span> 
+            💡 বিরক্তিকর বিজ্ঞাপন ছাড়া টিভি দেখতে ভিডিও প্লেয়ারের নিচে ডান কোণায় ক্লিক করে 
+            <span style="color: #00FF00; font-weight: bold;">"Full Screen" মুডে ভিডিও দেখুন</span>, তাহলে কোনো অ্যাড আপনার সামনে আসবে না! ধন্যবাদ ⛔
+        </marquee>
+    </div>
+
+    <footer class="footer-premium">
         <div class="container">
-            <div class="tg-card" style="margin-bottom: 20px;">
-                <h5 style="color:#fff; margin-bottom:5px; font-size:16px;">সাপোর্ট প্রয়োজন?</h5>
-                <p style="color:#777; font-size:11px; margin-bottom:5px;">আপডেট ও চ্যানেল রিকোয়েস্টের জন্য আমাদের টেলিগ্রাম গ্রুপে যোগ দিন।</p>
-                <a href="https://t.me/rslivetv" target="_blank" class="btn btn-danger btn-sm" style="font-size: 12px; font-family: Arial;">JOIN TELEGRAM</a>
+            <div class="tio-style-banner-fixed">
+                <div class="banner-overlay"></div>
+                <div class="content-wrapper">
+                    <div class="brand-logo-fixed">
+                        <span class="rs-live">RS Live</span>
+                        <span class="tv-text">TV</span>
+                    </div>
+                    <div class="text-section-fixed">
+                        <div class="main-tags">
+                            <span class="tag-cricket">CRICKET 🏏</span>
+                            <span class="tag-football">FOOTBALL ⚽</span>
+                            <span class="tag-tv">TV SHOWS 📺</span>
+                        </div>
+                        <p class="sub-text">সব পাবেন একদম ফ্রিতে!</p>
+                    </div>
+                    <div class="live-circle"><span class="pulse"></span>LIVE</div>
+                </div>
             </div>
 
-            <div class="ad-box" style="margin-bottom: 15px;">
+            <div class="tg-card">
+                <h5 style="color:#fff; margin-bottom:5px; font-size:16px;">সাপোর্ট প্রয়োজন?</h5>
+                <p style="color:#777; font-size:11px; margin-bottom:5px;">আপডেট ও চ্যানেল রিকোয়েস্টের জন্য আমাদের টেলিগ্রাম গ্রুপে যোগ দিন।</p>
+                <a href="https://t.me/rslivetv" target="_blank" class="telegram-btn">JOIN TELEGRAM</a>
+            </div>
+
+            <div class="ad-box">
                 <script type="text/javascript">
                     atOptions = {
                         'key' : '774c0e371455f6476668178b5faae5ab',
@@ -202,15 +352,83 @@
                 <script type="text/javascript" src="//www.highperformanceformat.com/774c0e371455f6476668178b5faae5ab/invoke.js"></script>
             </div>
 
-            <div class="copyright" style="color: #666; font-size: 12px; font-family: Arial;">
+            <div class="copyright">
                 © 2026 RS LIVE TV | All Rights Reserved
             </div>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=10.0"></script>
     <script>
+        // ১. লোডিং ইন্ট্রো স্ক্রিন রিমুভার
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const loader = document.getElementById('intro-loader');
+                if (loader) {
+                    loader.style.opacity = '0';
+                    loader.style.visibility = 'hidden';
+                    setTimeout(() => { loader.remove(); }, 500);
+                }
+            }, 1200); 
+        });
+
+        // ২. 🎮 স্মার্ট টিভি রিমোটের আপ/ডাউন এবং ওকে বাটনকে ম্যানুয়ালি কন্ট্রোল করার মাস্টার লজিক
+        document.addEventListener('keydown', function(event) {
+            const items = Array.from(document.querySelectorAll('#channel-container li'));
+            if (items.length === 0) return;
+            
+            const active = document.activeElement;
+            let index = items.indexOf(active);
+
+            // রিমোট ডাউন বাটন (ArrowDown = 40)
+            if (event.keyCode === 40 || event.key === "ArrowDown") {
+                event.preventDefault();
+                let nextIndex = index + 1;
+                if (nextIndex < items.length) {
+                    items[nextIndex].focus();
+                }
+            } 
+            // রিমোট আপ বাটন (ArrowUp = 38)
+            else if (event.keyCode === 38 || event.key === "ArrowUp") {
+                event.preventDefault();
+                let prevIndex = index - 1;
+                if (prevIndex >= 0) {
+                    items[prevIndex].focus();
+                }
+            } 
+            // রিমোট ওকে / এন্টার বাটন (Enter = 13)
+            else if (event.keyCode === 13 || event.key === "Enter") {
+                if (active && active.tagName === 'LI') {
+                    event.preventDefault();
+                    active.click(); 
+                }
+            }
+        });
+
+        // রিমোট ফোকাস হওয়ার সাথে সাথে অটো স্ক্রোল ভিউ লক
+        window.addEventListener('focus', function(event) {
+            if (event.target && event.target.tagName === 'LI') {
+                event.target.scrollIntoView({
+                    block: 'center', 
+                    behavior: 'smooth'
+                });
+            }
+        }, true); 
+
+        // প্রথম চ্যানেলে অটোমেটিক রিমোট ফোকাস নেওয়া
+        function initTVFocus() {
+            setTimeout(() => {
+                const firstChannel = document.querySelector('#channel-container li');
+                if (firstChannel) {
+                    firstChannel.focus();
+                }
+            }, 600);
+        }
+
         document.addEventListener('contextmenu', event => event.preventDefault());
     </script>
+    
+    <script async="async" data-cfasync="false" src="https://pl26377079.effectivecpmnetwork.com/cdeccdd75d3e2e6916a42ce9653cfb08/invoke.js"></script>
+    <div id="container-cdeccdd75d3e2e6916a42ce9653cfb08"></div>
 </body>
-</html>
+    </html>
