@@ -26,6 +26,9 @@
             -ms-user-select: none;
             user-select: none;
             background-color: #06060c;
+            overflow-x: hidden;
+            scroll-behavior: auto !important; 
+            overscroll-behavior-y: contain;
         }
 
         /* 🎬 ইন্ট্রো লোডার */
@@ -100,6 +103,56 @@
         @keyframes fadeInText { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes dotPulse { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
 
+        /* ✨ আল্ট্রা-প্রিমিয়াম গ্লোয়িং লোগো এবং টপ বার */
+        .top-bar-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10px;
+            background: linear-gradient(180deg, rgba(13,13,21,0.6) 0%, rgba(6,6,12,0) 100%);
+            margin-bottom: 10px;
+        }
+
+        .brand-title-neon {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-title-neon .rs-glow {
+            background: linear-gradient(135deg, #fff 30%, #a3b8cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-title-neon .live-glow {
+            color: #ff0055;
+            text-shadow: 0 0 15px rgba(255, 0, 85, 0.6), 0 0 30px rgba(255, 0, 85, 0.3);
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        .neon-tv-tag {
+            background: linear-gradient(90deg, #00f0ff, #0072ff);
+            color: #040406;
+            font-size: 14px;
+            font-weight: 800;
+            padding: 2px 10px;
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 0, 85, 0.5); }
+            100% { text-shadow: 0 0 25px rgba(255, 0, 85, 0.9), 0 0 10px rgba(255, 0, 85, 0.4); }
+        }
+
         .tv-view .embed-responsive {
             border: 1px solid #1f2029;
             border-radius: 12px;
@@ -113,6 +166,101 @@
             width: 100%;
             height: 100%;
         }
+
+        /* 🔍 প্রিমিয়াম মডার্ন সার্চ কন্টেইনার */
+        .channel-search-box-premium {
+            position: relative;
+            width: 100%;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .channel-search-box-premium input {
+            width: 100%;
+            padding: 9px 38px 9px 12px;
+            background: #111118;
+            border: 1px solid rgba(0, 240, 255, 0.25);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .channel-search-box-premium input:focus {
+            border-color: #00f0ff;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+            background: #141422;
+        }
+
+        .search-icon-inside {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            color: #717181;
+            pointer-events: none;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .channel-search-box-premium input:focus + .search-icon-inside {
+            color: #00f0ff;
+        }
+
+        /* 🏷️ ডাইনামিক হরাইজন্টাল ক্যাটাগরি বাটন এরিয়া */
+        .category-container-premium {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .category-container-premium::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .cat-btn-premium {
+            background: #12121a;
+            color: #a0a0b0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 5px 12px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .cat-btn-premium:hover {
+            color: #fff;
+            border-color: rgba(0, 240, 255, 0.3);
+        }
+        .cat-btn-premium.active {
+            background: linear-gradient(90deg, #00f0ff, #0072ff);
+            color: #040406;
+            border-color: transparent;
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
+        }
+
+        /* 📱 মোবাইলের জন্য সার্চ ও ক্যাটাগরি পজিশন ফিক্স */
+        @media (max-width: 990px) {
+            .channel-list-wrapper {
+                display: flex;
+                flex-direction: column;
+                margin-top: 15px;
+                padding: 0 15px;
+            }
+            .channel-search-box-premium {
+                margin-bottom: 8px;
+                width: 100%;
+            }
+        }
+
         .marquee-container {
             background: #0d0d13;
             color: #ffffff;
@@ -301,18 +449,13 @@
     </div>
 
     <div class="container tv-area">
-        <!-- 💎 প্রিমিয়াম হেডার: বামে কালারফুল ব্র্যান্ড নেম, ডানে কিউট ছোট সার্চকার্ড -->
         <div class="row">
             <div class="col-xs-12 col-md-10">
                 <div class="top-bar-wrapper">
-                    <!-- বামদিকের আকর্ষণীয় কালারফুল ব্র্যান্ড লোগো -->
                     <div class="brand-title-neon">
-                        RS LIVE <span class="neon-tv-tag">TV</span>
-                    </div>
-                    <!-- ডানদিকের স্লিম কিউট সার্চ বক্স -->
-                    <div class="channel-search-box-premium">
-                        <input type="text" id="channelSearch" placeholder="চ্যানেল খুঁজুন...">
-                        <span class="search-icon-inside">🔍</span>
+                        <span class="rs-glow">RS</span>
+                        <span class="live-glow">LIVE</span>
+                        <span class="neon-tv-tag">TV</span>
                     </div>
                 </div>
             </div>
@@ -324,19 +467,34 @@
                     <iframe id="tv-player-iframe" name="player" class="embed-responsive-item" allowfullscreen src="channel.html"></iframe>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-2 channel-list" id="scroll-wrapper">
-                <ul class="thumbnail-slider" id="channel-container"></ul>
+            
+            <div class="col-xs-12 col-md-2 channel-list-wrapper">
+                <div class="channel-search-box-premium">
+                    <input type="text" id="channelSearch" placeholder="Search channel..." autocomplete="off">
+                    <span class="search-icon-inside">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    </span>
+                </div>
+
+                <div class="category-container-premium" id="category-filter-box">
+                    <button class="cat-btn-premium active" onclick="filterByCategory('All', this)">All</button>
+                    <button class="cat-btn-premium" onclick="filterByCategory('Sports', this)">Sports</button>
+                    <button class="cat-btn-premium" onclick="filterByCategory('News', this)">News</button>
+                    <button class="cat-btn-premium" onclick="filterByCategory('Entertainment', this)">Entertainment</button>
+                    <button class="cat-btn-premium" onclick="filterByCategory('Movies', this)">Movies</button>
+                </div>
+
+                <div class="channel-list" id="scroll-wrapper">
+                    <ul class="thumbnail-slider" id="channel-container"></ul>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="marquee-container">
         <div class="notice-label">NOTICE</div>
-        <marquee scrollamount="6" onmouseover="this.stop()" onmouseout="this.start()">
-            ⚠️ বর্তমানে আমাদের ওয়েব সাইট আপডেট চলছে, আপডেট চলাকালীন সময় কিছু চ্যানেল ডাউন হতে পারে। 
-            <span style="color: aqua; font-weight: bold;">টিভি চ্যানেল প্লে হতে ৫ থেকে ১০ সেকেন্ড টাইম নিতে পারে।</span> 
-            💡 বিরক্তিকর বিজ্ঞাপন ছাড়া টিভি দেখতে ভিডিও প্লেয়ারের নিচে ডান কোণায় ক্লিক করে 
-            <span style="color: #00FF00; font-weight: bold;">"Full Screen" মুডে ভিডিও দেখুন</span>, তাহলে কোনো অ্যাড আপনার সামনে আসবে না! ধন্যবাদ ⛔
+        <marquee scrollamount="5" onmouseover="this.stop()" onmouseout="this.start()">
+            ⚠️ আমাদের সিস্টেমে ব্যাকএন্ড সার্ভার আপগ্রেডেশনের কাজ সফলভাবে চলছে। এই রক্ষণাবেক্ষণ প্রক্রিয়ার সময় সাময়িকভাবে কিছু প্রিমিয়াম স্পোর্টস এবং এন্টারটেইনমেন্ট চ্যানেল বাফার করতে পারে অথবা সাময়িক ডাউন থাকতে পারে। কোনো চ্যানেল প্লে হতে সমস্যা হলে অনুগ্রহ করে ৫ থেকে ১০ সেকেন্ড অপেক্ষা করুন, প্লেয়ারটি নিজে থেকেই স্ট্রিম সোর্স রিলোড করে নেবে। 💡 বিরক্তিকর পপ-আপ কিংবা কোনো অনাকাঙ্ক্ষিত থার্ড পার্টি বিজ্ঞাপন ছাড়া একদম নিরবচ্ছিন্ন ও ফ্রেশ মুডে খেলা দেখতে চাইলে, আমাদের ভিডিও প্লেয়ারের নিচে ঠিক ডান কোণায় থাকা "Full Screen" আইকনটিতে ক্লিক করে ফুল স্ক্রিন মুডে প্লে করুন। ফুল স্ক্রিন মুড একটিভ থাকলে কোনো অ্যাড বা ব্যানার আপনার সামনে এসে ডিস্টার্ব করবে না! যেকোনো জরুরি আপডেট, নতুন চ্যানেল রিকোয়েস্ট অথবা যেকোনো সমস্যা সরাসরি জানাতে নিচের অফিশিয়াল টেলিগ্রাম বাটনে ক্লিক করে আমাদের কমিউনিটি গ্রুপে যুক্ত হোন। সাথে থাকার জন্য ধন্যবাদ! ⛔
         </marquee>
     </div>
 
@@ -386,31 +544,24 @@
         </div>
     </footer>
 
-    <!-- 🎮 スマート TV রিমোট, সার্চ ও সলিড সিকিউরিটি স্ক্রিপ্ট -->
     <script src="script.js?v=12.0"></script>
     <script>
-        // 🔒 ১. মাউস রাইট-ক্লিক সম্পূর্ণ ব্লক
+        // 🔒 সিকিউরিটি এবং সোর্স কোড প্রোটেকশন
         document.addEventListener('contextmenu', event => event.preventDefault());
-
-        // 🔒 ২. কিবোর্ড সোর্স কোড দেখার শর্টকাট (F12, Ctrl+U, Ctrl+Shift+I/J) ব্লক
         document.onkeydown = function(e) {
             if (e.keyCode == 123) { return false; } 
             if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } 
             if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } 
             if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } 
         };
-        
-        // 🔒 ৩. ডেভটুলস ট্র্যাপ প্রোটেকশন (ইন্সপেক্ট ওপেন করলেই পেজ ক্র্যাশ/ব্ল্যাঙ্ক হয়ে যাবে)
         setInterval(function(){
             const startTime = +new Date();
             debugger;
             const endTime = +new Date();
-            if(endTime - startTime > 100){
-                window.location.href = "about:blank";
-            }
+            if(endTime - startTime > 100){ window.location.href = "about:blank"; }
         }, 100);
 
-        // 🎬 লোডিং ইন্ট্রো স্ক্রিন রিমুভার
+        // 🎬 লোডিং ইন্ট্রো
         window.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 const loader = document.getElementById('intro-loader');
@@ -422,18 +573,74 @@
             }, 1200); 
         });
 
-        // 🎮 スマート TV রিমোট কন্ট্রোল কি লজিক
+        // 🔍 ক্যাটাগরি ও সার্চ একসাথে মিলিয়ে লাইভ ফিল্টার করার গ্লোবাল লজিক
+        let currentSelectedCategory = 'All';
+
+        function applyInstantChannelFilter() {
+            const searchInput = document.getElementById('channelSearch');
+            if (!searchInput) return;
+
+            const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+            const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+            let filter = searchInput.value.toUpperCase();
+            let ul = document.getElementById("channel-container");
+            if (!ul) return;
+            
+            let li = ul.getElementsByTagName('li');
+            
+            for (let i = 0; i < li.length; i++) {
+                let textValue = li[i].textContent || li[i].innerText;
+                // script.js থেকে জেনারেট হওয়া li-তে ডাটা ক্যাটাগরি রিড করা হচ্ছে
+                let chCategory = li[i].getAttribute('data-category') || 'All';
+
+                let matchSearch = textValue.toUpperCase().indexOf(filter) > -1;
+                let matchCategory = (currentSelectedCategory === 'All' || chCategory.toUpperCase() === currentSelectedCategory.toUpperCase());
+
+                if (matchSearch && matchCategory) {
+                    li[i].style.display = ''; 
+                } else {
+                    li[i].style.display = 'none'; 
+                }
+            }
+            window.scrollTo(scrollX, scrollY);
+        }
+
+        // 🏷️ ক্যাটাগরি বাটনে ক্লিক হ্যান্ডলার
+        function filterByCategory(categoryName, buttonElement) {
+            currentSelectedCategory = categoryName;
+            
+            // একটিভ বাটন স্টাইল চেঞ্জ
+            const buttons = document.querySelectorAll('.cat-btn-premium');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+
+            // ফিল্টার মেকানিজম রান করা
+            applyInstantChannelFilter();
+        }
+
+        const searchInputEl = document.getElementById('channelSearch');
+        if (searchInputEl) {
+            searchInputEl.addEventListener('input', applyInstantChannelFilter);
+            searchInputEl.addEventListener('keyup', applyInstantChannelFilter);
+        }
+
+        // スマート TV রিমোট লজিক
         document.addEventListener('keydown', function(event) {
-            const items = Array.from(document.querySelectorAll('#channel-container li:not([style*="display: none"])')); 
+            const items = Array.from(document.querySelectorAll('#channel-container li')).filter(el => el.style.display !== 'none');
             const active = document.activeElement;
             const searchInput = document.getElementById('channelSearch');
 
             if (active === searchInput) {
+                if (event.keyCode === 13 || event.key === "Enter") {
+                    event.preventDefault();
+                    if (items.length > 0) { items[0].click(); }
+                    searchInput.blur(); 
+                    return false;
+                }
                 if (event.keyCode === 40 || event.key === "ArrowDown") {
                     event.preventDefault();
-                    if (items.length > 0) {
-                        items[0].focus(); 
-                    }
+                    if (items.length > 0) { items[0].focus(); }
                 }
                 return;
             }
@@ -462,20 +669,15 @@
         });
 
         window.addEventListener('focus', function(event) {
+            if (document.activeElement && document.activeElement.id === 'channelSearch') {
+                event.preventDefault();
+                event.stopPropagation();
+                return false;
+            }
             if (event.target && event.target.tagName === 'LI') {
-                event.target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                event.target.scrollIntoView({ block: 'nearest', behavior: 'auto' });
             }
         }, true); 
-
-        function initTVFocus() {
-            setTimeout(() => {
-                const firstChannel = document.querySelector('#channel-container li');
-                if (firstChannel) { firstChannel.focus(); }
-            }, 600);
-        }
     </script>
-    
-    <script async="async" data-cfasync="false" src="https://pl26377079.effectivecpmnetwork.com/cdeccdd75d3e2e6916a42ce9653cfb08/invoke.js"></script>
-    <div id="container-cdeccdd75d3e2e6916a42ce9653cfb08"></div>
 </body>
-</html>
+                </html>
