@@ -1,39 +1,45 @@
-// ১. চ্যানেল সার্চ ফিল্টার
-function filterChannels() {
-    let input = document.getElementById('channelSearch').value.toLowerCase();
-    let items = document.querySelectorAll('#channel-container li');
-    items.forEach(item => {
-        item.style.display = item.innerText.toLowerCase().includes(input) ? "" : "none";
-    });
-}
+document.addEventListener('DOMContentLoaded', function() {
+    const container = document.getElementById('channel-container');
 
-// ২. রিমোট ও কিবোর্ড কন্ট্রোল
-document.addEventListener('keydown', function(event) {
-    // যদি সার্চবারে ফোকাস থাকে, তবে রিমোট লজিক কাজ করবে না (টাইপিং ঠিক রাখতে)
-    if (document.activeElement.id === 'channelSearch') return;
+    fetch('playlist.json?t=' + Date.now())
+        .then(response => response.json())
+        .then(data => {
+            container.innerHTML = ''; 
 
-    const items = Array.from(document.querySelectorAll('#channel-container li')).filter(el => el.style.display !== 'none');
-    if (items.length === 0) return;
-    
-    const active = document.activeElement;
-    let index = items.indexOf(active);
+            data.forEach((channel, index) => {
+                const li = document.createElement('li');
+                
+                // রিমোট ফোকাস ধরার জন্য স্ট্যান্ডার্ড tabindex
+                li.setAttribute('tabindex', '0');
+                
+                li.innerHTML = `
+                    <div style="display: block; text-decoration: none; pointer-events: none; width: 100%;">
+                        <img src="${channel.image}" alt="${channel.name}" loading="lazy">
+                        <div class="channel-info-box">
+                            <p class="channel-title">${channel.name}</p>
+                        </div>
+                    </div>
+                `;
 
-    if (event.keyCode === 32) event.preventDefault(); // স্পেস বাটন লক
+                // 🎯 আপনার ওরিজিনাল ব্যাকআপের ক্লিক লজিক (কোনো পরিবর্তন নেই)
+                li.addEventListener('click', function() {
+                    if (window.frames['player']) {
+                        window.frames['player'].location.href = channel.url;
+                    } else {
+                        player.location.href = channel.url;
+                    }
+                });
+                
+                container.appendChild(li);
+            });
 
-    if (event.keyCode === 40) { // Down
-        event.preventDefault();
-        if (index + 1 < items.length) items[index + 1].focus();
-    } else if (event.keyCode === 38) { // Up
-        event.preventDefault();
-        if (index - 1 >= 0) items[index - 1].focus();
-    } else if (event.keyCode === 13) { // Enter
-        if (active && active.tagName === 'LI') active.click();
-    }
+            // প্লেলিস্ট লোড সম্পন্ন হলে টিভি ফোকাস সচল হবে
+            if (typeof initTVFocus === 'function') {
+                initTVFocus();
+            }
+        })
+        .catch(error => {
+            console.error('Error loading playlist:', error);
+            container.innerHTML = '<p style="color:red; font-size:10px; text-align:center; padding:20px;">Playlist Load Error!</p>';
+        });
 });
-
-// ৩. অটো স্ক্রোল
-window.addEventListener('focus', function(event) {
-    if (event.target && event.target.tagName === 'LI') {
-        event.target.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    }
-}, true);

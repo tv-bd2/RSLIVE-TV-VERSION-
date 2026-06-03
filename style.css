@@ -1,14 +1,177 @@
-/* সার্চবার ডিজাইন */
-.search-container { margin-bottom: 15px; width: 100%; }
-#channelSearch { 
-    width: 100%; padding: 12px 20px; background: #1b1c21; border: 1px solid #333; 
-    border-radius: 8px; color: #fff; font-size: 14px; outline: none; transition: 0.3s; 
-}
-#channelSearch:focus { border: 1px solid #00f0ff; box-shadow: 0 0 8px rgba(0,240,255,0.3); }
+@import url('https://fonts.googleapis.com/css?family=Rambla:400i');
 
-/* লোগো বক্স সাদা ব্যাকগ্রাউন্ড */
-.thumbnail-slider li img { 
-    width: 100% !important; height: 85px !important; 
-    object-fit: contain !important; background: #ffffff !important; 
+body {
+    background: #000;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
-.thumbnail-slider li:focus { outline: none; border: 2px solid #00f0ff; transform: scale(1.02); }
+
+/* 🖥️ ডেক্সটপ ও ল্যাপটপের জন্য মার্জিন */
+.tv-area { margin-top: 50px; }
+
+/* 📺 সাইডবার চ্যানেল কন্টেইনার (ডেক্সটপ ও টিভি মোড) */
+.channel-list { 
+    padding-left: 0; 
+    height: 540px; 
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    -webkit-overflow-scrolling: touch; 
+    scroll-behavior: smooth;
+    display: block;
+}
+
+.thumbnail-slider { 
+    margin: 0; 
+    padding: 0 5px;  
+    list-style: none;
+    display: block; 
+    width: 100%;
+}
+
+/* 🖼️ প্রতিটি চ্যানেল কার্ড বক্স (ডেক্সটপ) */
+.thumbnail-slider li { 
+    list-style: none; 
+    background: #1b1c21; 
+    border: 2px solid #2d2e35; 
+    border-radius: 8px;
+    padding: 0; 
+    display: inline-block; 
+    width: 100%;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow: hidden; 
+    outline: none !important;
+    position: relative;
+    transition: all 0.15s ease-in-out;
+    
+    scroll-margin-top: 20px;
+    scroll-margin-bottom: 20px;
+}
+
+/* 🎯 লোগো ইমেজ ফিক্সড এবং ব্যাকগ্রাউন্ড সাদা (ডেক্সটপ ও টিভি) */
+.thumbnail-slider li img { 
+    width: 100% !important; 
+    height: 85px !important; 
+    object-fit: contain !important; /* contain দেওয়া হলো যাতে লোগো কেটে না গিয়ে পুরোটা সাদা ব্যাকগ্রাউন্ডের মাঝে বসে */
+    display: block;
+    background: #ffffff !important; /* 🌟 প্রতিটা লোগোর ব্যাকগ্রাউন্ড সাদা করা হলো */
+}
+
+/* 📋 চ্যানেল টাইটেল বক্স (ডেক্সটপ) */
+.channel-info-box {
+    height: 35px !important; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    background: #1f2026; 
+    border-top: 1px solid #2d2e35;
+    box-sizing: border-box;
+}
+
+.channel-info-box .channel-title {
+    color: #aaaaaa;
+    font-size: 11px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 🎮 スマート TV রিমোট সিলেকশন ও হোভার (নেঅন ব্লু) */
+.thumbnail-slider li:hover, 
+.thumbnail-slider li:focus,
+.thumbnail-slider li:focus-within {
+    outline: none !important;
+    border: 2px solid #00f0ff !important; 
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.6); 
+    background: #252731 !important;
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+.thumbnail-slider li:focus .channel-info-box,
+.thumbnail-slider li:hover .channel-info-box {
+    background: #252731 !important;
+}
+
+.thumbnail-slider li:focus .channel-info-box .channel-title,
+.thumbnail-slider li:hover .channel-info-box .channel-title {
+    color: #ffffff !important; 
+}
+
+/* স্ক্রোলবার */
+.channel-list::-webkit-scrollbar {
+    width: 4px;
+    background-color: #0c0d11;
+}
+.channel-list::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #252731; 
+}
+
+/* 📱 মোবাইল ও ট্যাবলেটের রেসপনসিভ ভিউ কনফিগারেশন */
+@media (max-width: 1199px) {
+    .channel-list { height: 450px; }
+}
+
+@media (max-width: 990px) {
+    .tv-area { 
+        margin-top: 35px !important; 
+        padding-top: 5px !important;
+    }
+    
+    .channel-list { 
+        padding: 5px 8px; 
+        height: auto !important; 
+        overflow-y: hidden; 
+        overflow-x: auto; 
+        display: block;
+    }
+    
+    .thumbnail-slider {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 6px; 
+        padding: 0;
+        width: auto;
+    }
+    
+    /* 📱 মোবাইলের জন্য আল্ট্রা-কম্প্যাক্ট সাইজ */
+    .thumbnail-slider li { 
+        width: 80px !important; 
+        flex-shrink: 0;
+        margin-bottom: 0;
+        border-radius: 5px; 
+        scroll-margin-left: 10px;
+        scroll-margin-right: 10px;
+    }
+    
+    /* 🎯 লোগো ইমেজের হাইট ও ব্যাকগ্রাউন্ড সাদা (মোবাইল) */
+    .thumbnail-slider li img { 
+        height: 48px !important; 
+        object-fit: contain !important; /* লোগো যেন চ্যাপ্টা না হয়ে সুন্দর দেখায় */
+        background: #ffffff !important; /* 🌟 মোবাইলেও প্রতিটা লোগোর ব্যাকগ্রাউন্ড সাদা করা হলো */
+    }
+    
+    /* 📋 চ্যানেল টাইটেল বক্সের হাইট ও প্যাডিং টিউনিং */
+    .channel-info-box {
+        height: 26px !important; 
+        padding: 0 3px;
+    }
+    
+    .channel-info-box .channel-title {
+        font-size: 8.5px; 
+        line-height: 1.1;
+        -webkit-line-clamp: 2;
+    }
+}
