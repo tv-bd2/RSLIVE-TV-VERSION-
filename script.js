@@ -9,8 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             data.forEach((channel, index) => {
                 const li = document.createElement('li');
-                
-                // রিমোট ফোকাস ধরার জন্য স্ট্যান্ডার্ড tabindex
                 li.setAttribute('tabindex', '0');
                 
                 li.innerHTML = `
@@ -22,12 +20,20 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                 `;
 
-                // 🎯 ক্লিক লজিক
+                // 🎯 ক্লিক করলে প্লে হবে এবং সার্চবক্স অটো-ক্লিয়ার হয়ে যাবে
                 li.addEventListener('click', function() {
                     if (window.frames['player']) {
                         window.frames['player'].location.href = channel.url;
                     } else {
                         player.location.href = channel.url;
+                    }
+
+                    // ✨ ম্যাজিক লজিক: চ্যানেল প্লে হওয়ার সাথে সাথে সার্চবক্স একদম ফাকা হয়ে যাবে
+                    if (searchInput) {
+                        searchInput.value = ''; // লেখা মুছে যাবে
+                        // সমস্ত চ্যানেলকে আবার দৃশ্যমান করে দেওয়া হলো
+                        const channelItems = container.querySelectorAll('li');
+                        channelItems.forEach(item => item.style.display = "");
                     }
                 });
                 
@@ -43,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     channelItems.forEach(item => {
                         const channelTitle = item.querySelector('.channel-title').textContent.toLowerCase();
                         if (channelTitle.includes(filterValue)) {
-                            item.style.display = ""; // মিললে দেখাবে
+                            item.style.display = ""; 
                         } else {
-                            item.style.display = "none"; // না মিললে হাইড হবে
+                            item.style.display = "none"; 
                         }
                     });
                 });
