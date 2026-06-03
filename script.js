@@ -1,69 +1,59 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const container = document.getElementById('channel-container');
-    const searchInput = document.getElementById('channelSearch');
+// 📥 playlist.json থেকে ডাটা ফেচ করে চ্যানেল তৈরি করার স্ক্রিপ্ট
+document.addEventListener("DOMContentLoaded", function () {
+    const channelContainer = document.getElementById("channel-container");
 
-    fetch('playlist.json?t=' + Date.now())
+    // প্লেলিস্ট ডট জেফন ফাইল রিড করা
+    fetch("playlist.json")
         .then(response => response.json())
         .then(data => {
-            container.innerHTML = ''; 
+            channelContainer.innerHTML = ""; // আগের ডামি কন্টেন্ট ক্লিয়ার
 
             data.forEach((channel, index) => {
-                const li = document.createElement('li');
-                li.setAttribute('tabindex', '0');
+                const li = document.createElement("li");
                 
+                // 🎮 স্মার্ট টিভির জন্য ফোকাস ট্যাব ইনডেক্স
+                li.tabIndex = 0; 
+                
+                // 🏷️ ক্যাটাগরি ফিল্টার করার জন্য ডাটা এট্রিবিউট সেট (সবচেয়ে গুরুত্বপূর্ণ লাইন)
+                const channelCategory = channel.category ? channel.category : "All";
+                li.setAttribute("data-category", channelCategory);
+
+                // প্রথম চ্যানেলটিকে বাই-ডিফল্ট একটিভ ক্লাস দেওয়া
+                if (index === 0) {
+                    li.className = "active";
+                }
+
+                // চ্যানেল কার্ডের ডিজাইন লেআউট জেনারেশন
                 li.innerHTML = `
-                    <div style="display: block; text-decoration: none; pointer-events: none; width: 100%;">
-                        <img src="${channel.image}" alt="${channel.name}" loading="lazy">
-                        <div class="channel-info-box">
-                            <p class="channel-title">${channel.name}</p>
+                    <div class="channel-card-wrapper">
+                        <img src="${channel.image}" alt="${channel.name}" onerror="this.src='https://i.postimg.cc/mD1VCt2C/RS-Live.png'">
+                        <div class="channel-details">
+                            <span class="ch-name">${channel.name}</span>
+                            <span class="ch-cat-badge">${channelCategory}</span>
                         </div>
                     </div>
                 `;
 
-                // 🎯 ক্লিক করলে প্লে হবে এবং সার্চবক্স অটো-ক্লিয়ার হয়ে যাবে
-                li.addEventListener('click', function() {
-                    if (window.frames['player']) {
-                        window.frames['player'].location.href = channel.url;
-                    } else {
-                        player.location.href = channel.url;
-                    }
+                // চ্যানেল কার্ডে ক্লিক করলে প্লেয়ার আইফ্রেমে সোর্স চেঞ্জ হওয়া
+                li.addEventListener("click", function () {
+                    // একটিভ ক্লাস অদলবদল
+                    document.querySelectorAll("#channel-container li").forEach(item => item.classList.remove("active"));
+                    li.classList.add("active");
 
-                    // ✨ ম্যাজিক লজিক: চ্যানেল প্লে হওয়ার সাথে সাথে সার্চবক্স একদম ফাকা হয়ে যাবে
-                    if (searchInput) {
-                        searchInput.value = ''; // লেখা মুছে যাবে
-                        // সমস্ত চ্যানেলকে আবার দৃশ্যমান করে দেওয়া হলো
-                        const channelItems = container.querySelectorAll('li');
-                        channelItems.forEach(item => item.style.display = "");
+                    // আইফ্রেম প্লেয়ার আপডেট
+                    const playerIframe = document.getElementById("tv-player-iframe");
+                    if (playerIframe) {
+                        playerIframe.src = channel.url;
                     }
                 });
-                
-                container.appendChild(li);
+
+                channelContainer.appendChild(li);
             });
 
-            // 🔍 ইনস্ট্যান্ট লাইভ চ্যানেল ফিল্টার সার্চ লজিক
-            if (searchInput) {
-                searchInput.addEventListener('input', function() {
-                    const filterValue = this.value.toLowerCase().trim();
-                    const channelItems = container.querySelectorAll('li');
-
-                    channelItems.forEach(item => {
-                        const channelTitle = item.querySelector('.channel-title').textContent.toLowerCase();
-                        if (channelTitle.includes(filterValue)) {
-                            item.style.display = ""; 
-                        } else {
-                            item.style.display = "none"; 
-                        }
-                    });
-                });
-            }
-
-            // প্লেলিস্ট লোড সম্পন্ন হলে টিভি ফোকাস সচল হবে
-            if (typeof initTVFocus === 'function') {
-                initTVFocus();
+            // চ্যানেল লোড শেষ হওয়ার পর যদি ক্যাটাগরি স্ক্রিপ্ট থাকে তবে তা ইনিশিয়াল সিঙ্ক করা
+            if (typeof applyInstantChannelFilter === "function") {
+                applyInstantChannelFilter();
             }
         })
-        .catch(error => {
-            console.error('Error loading playlist:', error);
-            container.innerHTML = '<p style="color:red; font-size:10px; text-align:center; padding:20px;">Playlist Load Error!</p>';
-        });
+        .catch(error => console.error("Error loading playlist:", error));
 });
