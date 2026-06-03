@@ -16,7 +16,7 @@
 
     <link rel="shortcut icon" type="x-icon" href="https://i.postimg.cc/mD1VCt2C/RS-Live.png">
     <link href="bootstrap.min.css" rel="stylesheet">
-    <link href="style.css?v=11.0" rel="stylesheet">
+    <link href="style.css?v=12.0" rel="stylesheet">
 
     <style>
         /* 🚫 টেক্সট সিলেক্ট বা কপি করা বন্ধ করার CSS */
@@ -25,7 +25,7 @@
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
-            background-color: #0b0b12;
+            background-color: #06060c;
         }
 
         /* 🎬 ইন্ট্রো লোডার */
@@ -101,10 +101,11 @@
         @keyframes dotPulse { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
 
         .tv-view .embed-responsive {
-            border: 1px solid #222;
-            border-radius: 8px;
+            border: 1px solid #1f2029;
+            border-radius: 12px;
             background: #000;
             overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
         }
         iframe {
             border: 0 !important;
@@ -113,26 +114,27 @@
             height: 100%;
         }
         .marquee-container {
-            background: #121212;
+            background: #0d0d13;
             color: #ffffff;
-            padding: 8px 0;
+            padding: 10px 0;
             display: flex;
             align-items: center;
-            border-top: 1px solid #333;
-            border-bottom: 1px solid #333;
+            border-top: 1px solid #1a1b26;
+            border-bottom: 1px solid #1a1b26;
         }
         .notice-label {
-            background: #ff4444;
+            background: linear-gradient(135deg, #ff0055, #ff5500);
             color: #fff;
-            padding: 2px 10px;
-            margin-left: 10px;
-            border-radius: 4px;
+            padding: 3px 12px;
+            margin-left: 15px;
+            border-radius: 20px;
             font-weight: bold;
             font-size: 11px;
             flex-shrink: 0;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
         }
         .footer-premium {
-            background: #0a0a0a;
+            background: #040408;
             padding: 20px 0 30px 0;
             text-align: center;
         }
@@ -247,10 +249,10 @@
             100% { transform: scale(1.5); opacity: 0; }
         }
         .tg-card {
-            background: #161616;
+            background: #111116;
             padding: 15px;
             border-radius: 12px;
-            border: 1px solid #222;
+            border: 1px solid #1a1b26;
             display: block;
             width: 320px;
             margin: 15px auto;
@@ -299,10 +301,19 @@
     </div>
 
     <div class="container tv-area">
+        <!-- 💎 নতুন প্রিমিয়াম হেডার: বামে কালারফুল ব্র্যান্ড নেম, ডানে কিউট ছোট সার্চকার্ড -->
         <div class="row">
             <div class="col-xs-12 col-md-10">
-                <div class="channel-search-box">
-                    <input type="text" id="channelSearch" placeholder="🔍 আপনার প্রিয় চ্যানেলটি খুঁজুন...">
+                <div class="top-bar-wrapper">
+                    <!-- বামদিকের আকর্ষণীয় কালারফুল ব্র্যান্ড লোগো -->
+                    <div class="brand-title-neon">
+                        RS LIVE <span class="neon-tv-tag">TV</span>
+                    </div>
+                    <!-- ডানদিকের স্লিম কিউট সার্চ বক্স -->
+                    <div class="channel-search-box-premium">
+                        <input type="text" id="channelSearch" placeholder="চ্যানেল খুঁজুন...">
+                        <span class="search-icon-inside">🔍</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -375,7 +386,7 @@
         </div>
     </footer>
 
-    <script src="script.js?v=11.0"></script>
+    <script src="script.js?v=12.0"></script>
     <script>
         // 🔒 মাউস রাইট-ক্লিক এবং ইনস্পেক্ট এলিমেন্ট ডিটেকশন ব্লক
         document.addEventListener('contextmenu', event => event.preventDefault());
@@ -386,7 +397,7 @@
             if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } 
         };
         
-        // ডেভটুলস ওপেন করার চেষ্টা করলে প্রোটেকশন
+        // ডেভটুলস ট্র্যাপ প্রোটেকশন
         setInterval(function(){
             const startTime = +new Date();
             debugger;
@@ -396,7 +407,7 @@
             }
         }, 100);
 
-        // 🎬 লোডিং ইন্ট্রো স্ক্রিন রিমুভার
+        // 🎬 লোডিং ইন্ট্রো রিমুভার
         window.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 const loader = document.getElementById('intro-loader');
@@ -408,27 +419,25 @@
             }, 1200); 
         });
 
-        // 🎮 スマート TV রিমোট কন্ট্রোল কি লজিক (সম্পূর্ণ ফিক্সড সংস্করণ)
+        // 🎮 スマート TV রিমোট কন্ট্রোল কি লজিক
         document.addEventListener('keydown', function(event) {
             const items = Array.from(document.querySelectorAll('#channel-container li:not([style*="display: none"])')); 
             const active = document.activeElement;
             const searchInput = document.getElementById('channelSearch');
 
-            // ১. ফোকাস যদি সরাসরি সার্চবক্সে থাকে
             if (active === searchInput) {
                 if (event.keyCode === 40 || event.key === "ArrowDown") {
                     event.preventDefault();
                     if (items.length > 0) {
-                        items[0].focus(); // রিমোটের নিচের বাটন টিপলে সরাসরি প্রথম চ্যানেলে চলে যাবে
+                        items[0].focus(); 
                     }
                 }
-                return; // সার্চবক্সে থাকা অবস্থায় রিমোটের অন্যান্য বাটন দিয়ে স্বাভাবিকভাবে টাইপ করা যাবে
+                return;
             }
 
             if (items.length === 0) return;
             let index = items.indexOf(active);
 
-            // ২. চ্যানেলের তালিকায় রিমোটের নেভিগেশন লজিক
             if (event.keyCode === 40 || event.key === "ArrowDown") {
                 event.preventDefault();
                 let nextIndex = index + 1;
@@ -439,7 +448,7 @@
                 if (prevIndex >= 0) { 
                     items[prevIndex].focus(); 
                 } else if (prevIndex === -1 && searchInput) {
-                    searchInput.focus(); // একদম প্রথম চ্যানেলে থাকা অবস্থায় ওপরে চাপলে সার্চবক্সে ফোকাস যাবে
+                    searchInput.focus(); 
                 }
             } else if (event.keyCode === 13 || event.key === "Enter") {
                 if (active && active.tagName === 'LI') {
