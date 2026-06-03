@@ -1,39 +1,98 @@
 @import url('https://fonts.googleapis.com/css?family=Rambla:400i');
 
 body {
-    background: #000;
+    background: #06060c;
     overflow-x: hidden;
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
 }
 
-/* 🖥️ ডেক্সটপ ও ল্যাপটপের জন্য মার্জিন */
-.tv-area { margin-top: 30px; }
+/* 🖥️ ডেক্সটপ মার্জিন */
+.tv-area { margin-top: 25px; }
 
-/* 🔍 সার্চবার ডিজাইন কনফিগারেশন */
-.channel-search-box {
-    margin-bottom: 15px;
-    width: 100%;
+/* 💎 নতুন টপ বার মডার্ন প্যানেল কন্টেইনার */
+.top-bar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(22, 22, 30, 0.6), rgba(15, 15, 22, 0.7));
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 10px 20px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
-.channel-search-box input {
-    width: 100%;
-    padding: 10px 15px;
-    background: #16161a;
-    border: 2px solid #22232a;
-    border-radius: 8px;
-    color: #ffffff;
+/* 🌈 বাম পাশের কালারফুল নেওন লোগো টেক্সট */
+.brand-title-neon {
+    font-size: 22px;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 1.5px;
+    background: linear-gradient(45deg, #00f0ff, #ff0077, #ff9900);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientShine 4s linear infinite;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.neon-tv-tag {
     font-size: 14px;
-    outline: none;
-    transition: all 0.2s ease-in-out;
+    font-weight: 900;
+    background: #ff0055;
+    -webkit-text-fill-color: #fff;
+    padding: 1px 7px;
+    border-radius: 5px;
+    font-style: normal;
+    box-shadow: 0 0 12px rgba(255, 0, 85, 0.6);
 }
 
-/* 📺 স্মার্ট টিভি রিমোট বা মাউস দিয়ে ফোকাস করলে নেওন সাইয়ান গ্লো ইফেক্ট */
-.channel-search-box input:focus {
+@keyframes gradientShine {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 🔍 ডানদিকের প্রিমিয়াম ছোট সার্চবার কার্ড */
+.channel-search-box-premium {
+    position: relative;
+    width: 220px; /* ডেক্সটপে ফিক্সড ছোট এবং কিউট সাইজ */
+    transition: width 0.3s ease;
+}
+
+.channel-search-box-premium input {
+    width: 100%;
+    padding: 8px 35px 8px 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 30px; /* ওভাল স্টাইলিশ লুক */
+    color: #ffffff;
+    font-size: 13px;
+    outline: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.channel-search-box-premium .search-icon-inside {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 13px;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* ফোকাস করলে নেওন সাইয়ান গ্লো ইফেক্ট */
+.channel-search-box-premium input:focus {
     border-color: #00f0ff !important;
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
-    background: #1b1c24;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+    background: rgba(255, 255, 255, 0.07);
+    width: 260px; /* ফোকাস করলে একটু চওড়া হবে (মডার্ন ইফেক্ট) */
 }
 
 /* 📺 সাইডবার চ্যানেল কন্টেইনার */
@@ -55,11 +114,11 @@ body {
     width: 100%;
 }
 
-/* 🖼️ প্রতিটি চ্যানেল কার্ড বক্স (ডেক্সটপ) */
+/* 🖼️ প্রতিটি চ্যানেল কার্ড বক্স */
 .thumbnail-slider li { 
     list-style: none; 
-    background: #1b1c21; 
-    border: 2px solid #2d2e35; 
+    background: #111116; 
+    border: 2px solid #1a1b24; 
     border-radius: 8px;
     padding: 0; 
     display: inline-block; 
@@ -71,12 +130,11 @@ body {
     outline: none !important;
     position: relative;
     transition: all 0.15s ease-in-out;
-    
     scroll-margin-top: 20px;
     scroll-margin-bottom: 20px;
 }
 
-/* 🎯 লোগো ব্যাকগ্রাউন্ড সাদা (ডেক্সটপ ও টিভি) */
+/* লোগো ব্যাকগ্রাউন্ড */
 .thumbnail-slider li img { 
     width: 100% !important; 
     height: 85px !important; 
@@ -85,20 +143,20 @@ body {
     background: #ffffff !important;
 }
 
-/* 📋 চ্যানেল টাইটেল বক্স */
+/* চ্যানেল টাইটেল বক্স */
 .channel-info-box {
     height: 35px !important; 
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 6px;
-    background: #1f2026; 
-    border-top: 1px solid #2d2e35;
+    background: #16161f; 
+    border-top: 1px solid #1a1b24;
     box-sizing: border-box;
 }
 
 .channel-info-box .channel-title {
-    color: #aaaaaa;
+    color: #9999aa;
     font-size: 11px;
     font-weight: 600;
     margin: 0;
@@ -112,21 +170,21 @@ body {
     text-overflow: ellipsis;
 }
 
-/* 🎮 スマート TV রিমোট সিলেকশন ও হোভার (নেঅন ব্লু) */
+/* 🎮 স্মার্ট টিভি রিমোট সিলেকশন ও হোভার */
 .thumbnail-slider li:hover, 
 .thumbnail-slider li:focus,
 .thumbnail-slider li:focus-within {
     outline: none !important;
     border: 2px solid #00f0ff !important; 
     box-shadow: 0 0 12px rgba(0, 240, 255, 0.6); 
-    background: #252731 !important;
+    background: #1c1d29 !important;
     transform: scale(1.02);
     z-index: 10;
 }
 
 .thumbnail-slider li:focus .channel-info-box,
 .thumbnail-slider li:hover .channel-info-box {
-    background: #252731 !important;
+    background: #1c1d29 !important;
 }
 
 .thumbnail-slider li:focus .channel-info-box .channel-title,
@@ -137,11 +195,11 @@ body {
 /* স্ক্রোলবার */
 .channel-list::-webkit-scrollbar {
     width: 4px;
-    background-color: #0c0d11;
+    background-color: #06060c;
 }
 .channel-list::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: #252731; 
+    background-color: #1a1b24; 
 }
 
 /* 📱 মোবাইল ও ট্যাবলেটের রেসপনসিভ ভিউ কনফিগারেশন */
@@ -151,19 +209,36 @@ body {
 
 @media (max-width: 990px) {
     .tv-area { 
-        margin-top: 25px !important; 
-        padding-top: 5px !important;
+        margin-top: 15px !important; 
+        padding-top: 0px !important;
     }
 
-    .channel-search-box {
-        margin-bottom: 10px;
-        padding: 0 8px;
-    }
-
-    .channel-search-box input {
+    .top-bar-wrapper {
         padding: 8px 12px;
-        font-size: 13px;
-        border-radius: 6px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+    }
+
+    .brand-title-neon {
+        font-size: 16px;
+    }
+
+    .neon-tv-tag {
+        font-size: 11px;
+        padding: 1px 5px;
+    }
+
+    .channel-search-box-premium {
+        width: 130px;
+    }
+
+    .channel-search-box-premium input {
+        padding: 6px 28px 6px 12px;
+        font-size: 11px;
+    }
+
+    .channel-search-box-premium input:focus {
+        width: 150px;
     }
     
     .channel-list { 
@@ -182,7 +257,6 @@ body {
         width: auto;
     }
     
-    /* 📱 মোবাইলের জন্য সাইজ */
     .thumbnail-slider li { 
         width: 80px !important; 
         flex-shrink: 0;
@@ -192,14 +266,12 @@ body {
         scroll-margin-right: 10px;
     }
     
-    /* 🎯 লোগো ইমেজের হাইট (মোবাইল) */
     .thumbnail-slider li img { 
         height: 48px !important; 
         object-fit: contain !important;
         background: #ffffff !important;
     }
     
-    /* 📋 চ্যানেল টাইটেল বক্স (মোবাইল) */
     .channel-info-box {
         height: 26px !important; 
         padding: 0 3px;
@@ -210,4 +282,4 @@ body {
         line-height: 1.1;
         -webkit-line-clamp: 2;
     }
-}
+        }
