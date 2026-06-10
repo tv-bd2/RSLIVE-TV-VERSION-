@@ -2,89 +2,179 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>Rubel Live TV - Universal Player</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Rs Live TV</title>
 
+<!-- JW Player Script -->
 <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js"></script>
 <script>
 jwplayer.key="Khpp2dHxlBJHC8MCmLnBuV2jK/DwDnJMniwF6EO9HC/riJ712ZmbHg==";
 </script>
 
 <style>
-*{ margin:0; padding:0; box-sizing:border-box; }
-html,body{ width:100%; height:100%; background:#000; overflow:hidden; font-family:Arial,sans-serif; }
-
-#player-container, #iframe-container {
-    width:100%; height:100%; position: absolute; top:0; left:0;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-#iframe-container iframe {
-    width: 100%; height: 100%; border: none;
+html,body{
+width:100%;
+height:100%;
+background:#000;
+overflow:hidden;
+font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
+#player{
+width:100% !important;
+height:100% !important;
+position: absolute;
+top: 0;
+left: 0;
+}
+
+/* নেটলিফাই প্লেয়ারের মতো ক্লিন ও মিনিমাল লোডার */
 #loader {
-    position:fixed; top:0; left:0; width:100%; height:100%; background:#000;
-    display:flex; justify-content:center; align-items:center; z-index:9999; flex-direction:column;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000000;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+flex-direction:column;
+transition: opacity 0.3s ease;
 }
 
+/* ওই সাইটের মতো ম্যাটেরিয়াল/স্মুথ স্পিনার */
 .spinner {
-    width:60px; height:60px; border:5px solid rgba(255,255,255,.15);
-    border-top:5px solid #00c3ff; border-radius:50%; animation:spin 1s linear infinite;
+width: 50px;
+height: 50px;
+border: 3px solid rgba(255, 255, 255, 0.1);
+border-radius: 50%;
+border-top-color: #fff; 
+animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin { 100%{transform:rotate(360deg);} }
-#loader p { margin-top:15px; color:#fff; font-size:18px; }
+@keyframes spin {
+to { transform: rotate(360deg); }
+}
+
+#loader p {
+margin-top: 15px;
+color: #eee;
+font-size: 15px;
+letter-spacing: 0.5px;
+font-weight: 400;
+}
+
+.jwplayer {
+height:100% !important;
+width:100% !important;
+}
+
+/* ফিক্সড: জুম হবে না, ভিডিওর কোনো অংশ কাটবে না */
+.jw-video {
+object-fit: fill !important; /* fill দেওয়ার কারণে ভিডিও কাটা পড়বে না */
+width: 100vw !important;
+height: 100vh !important;
+}
+
+:-webkit-full-screen {
+  width: 100% !important;
+  height: 100% !important;
+}
 </style>
 </head>
+
 <body>
 
 <div id="loader">
-    <div class="spinner"></div>
-    <p>Loading Stream...</p>
+<div class="spinner"></div>
+<p id="loader-text">Loading Stream...</p>
 </div>
 
-<div id="player-container">
-    <div id="player"></div>
-</div>
-
-<div id="iframe-container" style="display:none;"></div>
+<div id="player"></div>
 
 <script>
-// আপনার ভিডিও বা আইফ্রেম লিঙ্কটি এখানে দিন
-const streamUrl = "https://taimoor.pro.bd/live/otvs/playex.php?id=167590";
+function getStreamUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('url');
+}
 
-// চেক করা হচ্ছে এটা কি সরাসরি ভিডিও ফাইল নাকি আইফ্রেম লিঙ্ক
-const isIframe = streamUrl.includes("playex.php") || streamUrl.includes("embed") || !streamUrl.includes(".m3u8");
+const streamUrl = getStreamUrl();
+const player = jwplayer("player");
 
-if (isIframe) {
-    // আইফ্রেম মোড
-    const loader = document.getElementById("loader");
-    const iframeContainer = document.getElementById("iframe-container");
-    const playerContainer = document.getElementById("player-container");
+const defaultStream = "https://cdn.jsdelivr.net/gh/nurmd2006/empty@main/stream/by/your-abbu/srktv.m3u8";
+const finalStream = streamUrl ? streamUrl : defaultStream;
 
-    playerContainer.style.display = "none";
-    iframeContainer.style.display = "block";
-    
-    iframeContainer.innerHTML = `<iframe src="${streamUrl}" allowfullscreen allow="autoplay; encrypted-media" scrolling="no"></iframe>`;
-    
-    // আইফ্রেম লোড হয়ে গেলে লোডার সরিয়ে দিন
-    setTimeout(() => {
-        loader.style.display = "none";
-    }, 2000);
+player.setup({
+playlist:[{
+title:"",
+sources:[
+{
+file: finalStream,
+type: "hls",
+label: "HD"
+}
+]
+}],
+width:"100%",
+height:"100%",
+aspectratio:"16:9",
+autostart:true,
+mute:false,
+primary:"html5",
+stretching:"fill", /* প্লেয়ার লেভেলেও স্ট্রেচিং fill রাখা হলো */
+controls:true
+});
 
-} else {
-    // JW Player মোড (সরাসরি m3u8 লিঙ্কের জন্য)
-    const player = jwplayer("player");
-    player.setup({
-        playlist:[{
-            sources:[{ file: streamUrl, type: "hls", label: "HD" }]
-        }],
-        width:"100%", height:"100%", autostart:true, mute:false, stretching:"uniform", controls:true
-    });
+/* ফুলস্ক্রিন ইভেন্ট হ্যান্ডলার */
+player.on("fullscreen", function(event){
+    if(event.fullscreen) {
+        if (screen.orientation && screen.orientation.lock) {
+            screen.orientation.lock("landscape").catch(function(error) {
+                console.log("Orientation lock ignored: ", error);
+            });
+        }
+        // ফুলস্ক্রিনেও অবজেক্ট ফিট 'fill' নিশ্চিত করা
+        setTimeout(() => {
+            const videoEl = document.querySelector('.jw-video');
+            if(videoEl) videoEl.style.setProperty('object-fit', 'fill', 'important');
+        }, 100);
+    }
+});
 
-    player.on("ready", () => document.getElementById("loader").style.display="none");
-    player.on("play", () => document.getElementById("loader").style.display="none");
-    player.on("error", () => document.getElementById("loader").innerHTML="<p style='color:white'>Stream Failed</p>");
+/* প্লেয়ার ইভেন্ট কন্ট্রোল */
+player.on("ready",function(){
+fadeAndHideLoader();
+});
+
+player.on("error",function(){
+document.getElementById("loader").style.display="flex";
+document.getElementById("loader").style.opacity="1";
+document.getElementById("loader-text").innerHTML = "<span style='color:#ff4444;'>Stream Failed or Invalid URL</span>";
+});
+
+player.on("buffer",function(){
+document.getElementById("loader").style.display="flex";
+document.getElementById("loader").style.opacity="1";
+document.getElementById("loader-text").innerText = "Buffering...";
+});
+
+player.on("play",function(){
+fadeAndHideLoader();
+});
+
+function fadeAndHideLoader() {
+    document.getElementById("loader").style.opacity="0";
+    setTimeout(() => { 
+        document.getElementById("loader").style.display="none"; 
+    }, 300);
 }
 </script>
 
